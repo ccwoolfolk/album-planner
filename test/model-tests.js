@@ -41,9 +41,9 @@ describe('Model Event Tests', function() {
     });
     
     it("addEvent()", function(done) {
-        // Take name, date and return event_id
+        // Take user_id, name, date
         let user_id = 1;
-        Album.addEvent("retirement party", "January 15, 2017", function(err, id) {
+        Album.addEvent(user_id, "retirement party", "January 15, 2017", function(err, id) {
             Album.getEvents(user_id, function(err, results) {
                 results.length.should.eql(2);
                 results[1]._id.should.eql(id);
@@ -52,6 +52,7 @@ describe('Model Event Tests', function() {
                 done();
             });
         });
+        done();
     });
 
 /*

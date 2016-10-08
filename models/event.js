@@ -25,6 +25,24 @@ exports.getEvents = function(user_id, cb) {
 }
 
 
+// Take user_id, name, date
+exports.addEvent = function(userId, eventName, eventDate, cb) {
+    let db = DB.getDB();
+    let result = db.collection(COLLECTION).update(
+        {"user_id": userId}, 
+        {$push: {
+            events: {
+                "event_id": null,
+                "name": eventName,
+                "date": eventDate,
+                "subjects": [],
+                "scenes": []
+            }
+        }},
+    (err, res) => cb(err,res));
+
+};
+
 
 /*
 
