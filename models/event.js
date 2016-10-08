@@ -9,15 +9,17 @@ const COLLECTION = 'users';
 // Get all users
 exports.all = function(cb) {
   let db = DB.getDB();
-  db.collection(COLLECTION).find({}).toArray(cb);
+  db.collection(COLLECTION).find({}).toArray(function(err, results) {
+      console.log(results);
+      cb(err, results);
+  });
 }
 
 // Get all events for a given user
 exports.getEvents = function(user_id, cb) {
     let db = DB.getDB();
-    db.collection(COLLECTION).find({"users": { $elemMatch: {"user_id": user_id}}}).toArray(function(err, results) {
-        let events = results.events;
-        console.log("results: ", events);
+    db.collection(COLLECTION).find({"user_id": user_id}).toArray(function(err, results) {
+        let events = results[0].events;
         cb(err, events);
     });
 }

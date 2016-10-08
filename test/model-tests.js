@@ -7,14 +7,6 @@ let assert = require("assert")
 let Album = require(process.env.GOPATH + '/models/event');
 
 
-describe("description", function() {
-    it("should return true", function() {
-        assert(false);
-    });
-});
-
-
-
 describe('Model Event Tests', function() {
 
     before(function(done) {
@@ -43,6 +35,7 @@ describe('Model Event Tests', function() {
         Album.getEvents(user_id, function(err, results) {
             results.length.should.eql(1);
             results[0].name.should.eql("birthday party");
+            //console.log("getEvents: ", results);
             done();
         });
     });
