@@ -8,7 +8,7 @@ const COLLECTION = 'albums';
 
 // Get all events for a user
 exports.all = function(cb) {
-  db = DB.getDB();
+  let db = DB.getDB();
   db.collection(COLLECTION).find({user_id: "test"}).toArray(cb);
 }
 

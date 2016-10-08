@@ -2,10 +2,11 @@ exports.data = {
     "collections": {
         "albums": [
             {
-                "user_id": "test",
+                "user_id": 1,
                 "user_name": "Test Person",
                 "events": [
                     {
+                        "event_id": 1,
                         "name": "birthday party",
                         "date": (new Date("October 7, 2016")).toString(),
                         "subjects": [
