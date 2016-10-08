@@ -1,6 +1,6 @@
 exports.data = {
     "collections": {
-        "albums": [
+        "users": [
             {
                 "user_id": 1,
                 "user_name": "Test Person",
