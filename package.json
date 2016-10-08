@@ -1,0 +1,21 @@
+{
+  "name": "album-planner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^0.2.10",
+    "express": "^3.2.6",
+    "mongodb": "^2.2.10",
+    "socket.io": "^0.9.17"
+  },
+  "devDependencies": {
+    "mocha": "^3.1.0",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "",
+  "license": "ISC"
+}

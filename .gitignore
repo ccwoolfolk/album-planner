@@ -1,0 +1,5 @@
+node_modules
+mongod
+mongod-close
+nodemon
+data
