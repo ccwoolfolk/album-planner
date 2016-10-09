@@ -19,7 +19,8 @@ exports.all = function(cb) {
 exports.getEvents = function(user_id, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({"user_id": user_id}).toArray(function(err, results) {
-        let events = results[0].events;
+        if (err) return cb(err);
+        let events = results.length === 0 ? [] : results[0].events;
         cb(err, events);
     });
 }
