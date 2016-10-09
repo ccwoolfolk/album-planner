@@ -9,14 +9,13 @@ const COLLECTION = 'users';
 // Get all users
 exports.all = function(cb) {
   let db = DB.getDB();
-  db.collection(COLLECTION).find({}).toArray(function(err, results) {
-      console.log(results);
-      cb(err, results);
+  db.collection(COLLECTION).find({}).toArray((err, results) => {
+    cb(err, results)
   });
 }
 
 // Get all events for a given user
-exports.getEvents = function(user_id, cb) {
+let getEvents = function(user_id, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({"user_id": user_id}).toArray(function(err, results) {
         if (err) return cb(err);
@@ -25,23 +24,33 @@ exports.getEvents = function(user_id, cb) {
     });
 }
 
+exports.getEvents = getEvents;
+
 
 // Take user_id, name, date
 exports.addEvent = function(userId, eventName, eventDate, cb) {
     let db = DB.getDB();
-    let result = db.collection(COLLECTION).update(
-        {"user_id": userId}, 
-        {$push: {
-            events: {
-                "event_id": null,
-                "name": eventName,
-                "date": eventDate,
-                "subjects": [],
-                "scenes": []
-            }
-        }},
-    (err, res) => cb(err,res));
+    getEvents(userId, function(err, allEvents) {
 
+        let newId = allEvents.reduce((prev, curr) => {
+          return Math.max(prev, parseInt(curr["event_id"]));
+        }, 0);
+        
+        newId++;
+
+        let result = db.collection(COLLECTION).update(
+            {"user_id": userId}, 
+            {$push: {
+                events: {
+                    "event_id": newId,
+                    "name": eventName,
+                    "date": eventDate,
+                    "subjects": [],
+                    "scenes": []
+                }
+            }},
+        (err, res) => cb(err,res));
+    });
 };
 
 
