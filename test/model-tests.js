@@ -40,7 +40,7 @@ describe('Model Event Tests', function() {
         });
     });
     
-    it("addEvent() single addition", function(done) {
+    it("addEvent()", function(done) {
         // Take user_id, name, date
         Album.addEvent(user_id, "retirement party", "January 15, 2017", function(err, id) {
 
@@ -62,10 +62,17 @@ describe('Model Event Tests', function() {
                 
             });
         });
-        
+    });
     
-                
-        
+    it("removeEvent()", function(done) {
+        Album.removeEvent(user_id, 1, function(err, results) {
+            Album.getEvents(user_id, function(err, results) {
+                assert.equal(results.length, 1);
+                assert.equal(results[0]["event_id"], 3);
+                assert.equal(results[0].name, "second event");
+                done();
+            });
+        });
     });
 
 
