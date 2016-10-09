@@ -23,6 +23,12 @@ exports.data = {
                             {   "subjects": [2]     },
                             {   "subjects": [1]     }
                         ]
+                    }, {
+                        "event_id": 3,
+                        "name": "second event",
+                        "date": (new Date("October 7, 2016")).toString(),
+                        "subjects": [],
+                        "scenes": []
                     }
                 ]
             }
