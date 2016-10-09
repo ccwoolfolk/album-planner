@@ -1,6 +1,5 @@
 "use strict";
 let assert = require("assert")
-  , should = require('should')
   , DB = require('../db')
   , fixtures = require(process.env.GOPATH + '/test/fixtures/model-albums').data;
   
@@ -25,7 +24,7 @@ describe('Model Event Tests', function() {
     it('all', function(done) {
         Album.all(function(err, comments) {
             console.log("All test, comments: ", comments);
-            comments.length.should.eql(1);
+            assert.equal(comments.length, 1);
             done();                             // Are these necessary?
         });
     });
@@ -33,9 +32,8 @@ describe('Model Event Tests', function() {
     it("getEvents()", function(done) {
         let user_id = 1;
         Album.getEvents(user_id, function(err, results) {
-            results.length.should.eql(1);
-            results[0].name.should.eql("birthday party");
-            //console.log("getEvents: ", results);
+            assert.equal(results.length, 1);
+            assert.equal(results[0].name, "birthday party");
             done();
         });
     });
@@ -45,15 +43,16 @@ describe('Model Event Tests', function() {
         let user_id = 1;
         Album.addEvent(user_id, "retirement party", "January 15, 2017", function(err, id) {
             Album.getEvents(user_id, function(err, results) {
-                results.length.should.eql(2);
-                results[1]._id.should.eql(id);
-                results[0].name.should.eql("birthday party");
-                results[1].name.should.eql("retirement party");
+                assert.equal(results.length, 2);
+                assert.equal(results[1]._id, id);
+                assert.equal(results[0].name, "birthday party");
+                assert.equal(results[1].name, "retirement party");
                 done();
             });
         });
         done();
     });
+
 
 /*
   it('create', function(done) {
