@@ -13,6 +13,8 @@ const DB = require("./db.js");
 app.set("view engine", "pug");
 app.set("json spaces", 3);
 
+app.use(express.static("public"));
+
 app.get("/", (req, res) => model.getEvents(1, (err, events) => {
     if (err) 
         console.error(err);
