@@ -5,11 +5,13 @@ let assert = require("assert")
   
 let Album = require(process.env.GOPATH + '/models/event');
 
+const user_id = 1;
 
 describe('Model Event Tests', function() {
 
     before(function(done) {
         DB.connect(DB.MODE_TEST, done);
+        
     });
 
     beforeEach(function(done) {
@@ -19,6 +21,8 @@ describe('Model Event Tests', function() {
                 
             DB.fixtures(fixtures, done)
         });
+        
+        
     });
 
     it('all', function(done) {
@@ -30,7 +34,6 @@ describe('Model Event Tests', function() {
     });
     
     it("getEvents()", function(done) {
-        let user_id = 1;
         Album.getEvents(user_id, function(err, results) {
             assert.equal(results.length, 1);
             assert.equal(results[0].name, "birthday party");
@@ -40,17 +43,17 @@ describe('Model Event Tests', function() {
     
     it("addEvent()", function(done) {
         // Take user_id, name, date
-        let user_id = 1;
         Album.addEvent(user_id, "retirement party", "January 15, 2017", function(err, id) {
+
             Album.getEvents(user_id, function(err, results) {
+                if (err) assert(false);
+                
                 assert.equal(results.length, 2);
-                assert.equal(results[1]._id, id);
                 assert.equal(results[0].name, "birthday party");
                 assert.equal(results[1].name, "retirement party");
                 done();
             });
         });
-        done();
     });
 
 
