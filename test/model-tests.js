@@ -76,7 +76,7 @@ describe('Model Event Tests', function() {
     });
 
     it("getEventDetails()", function(done) {
-        let eventId = 1;
+        let eventId = "1";
         Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
             assert.equal(eventDetails.name, "birthday party");
             assert.equal(eventDetails.subjects.length, 2);
