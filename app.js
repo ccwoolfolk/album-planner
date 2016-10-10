@@ -24,7 +24,6 @@ app.get("/", (req, res) => model.getEvents(1, (err, events) => {
 }));
 
 
-DB.connect(DB.MODE_TEST, () => DB.fixtures(fixtures, () => {
+DB.connect(DB.MODE_TEST, () => DB.drop(() => DB.fixtures(fixtures, () => {
     app.listen(8080, () => console.log("listening on 8080") );
-}));
-    
+})));
