@@ -32,7 +32,19 @@ app.get("/:userId", (req, res) => model.getEvents(req.params.userId, (err, event
     
 }));
 
-
+/* Add a new event */
+app.get("/:userId/addevent/:eventName", (req, res) => {
+    let newDate = new Date();
+    model.addEvent(
+        req.params.userId, 
+        req.params.eventName, 
+        newDate.toString(),
+        (err, id) => {
+            if (err)
+                console.error(err);
+            res.redirect(req.params.userId);
+        });
+});
 
 /* Show the event details when provided a user ID and event ID */
 app.get("/:userId/events/:eventId", (req, res) => {

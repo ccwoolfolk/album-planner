@@ -1,6 +1,7 @@
 html
     head
         link(rel="stylesheet", href="css/events.css", type='text/css' )
+        script(src="/js/events.js", type='text/javascript' )
         link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript")
     body
@@ -19,6 +20,6 @@ html
                     div.events
                         h3 Add new event
                         div(class="input-group")
-                            input(type="text" class="form-control" placeholder="Event name")
+                            input(id="new-event-name" type="text" class="form-control" placeholder="Event name")
                             span(class="input-group-btn")
-                                button(class="btn btn-default" type="button") Go!
+                                button(id="submit-new-event" class="btn btn-default" type="button") Go!
