@@ -7,7 +7,7 @@ const helpers = require(process.env.GOPATH + '/helpers/functions.js');
 describe('Helper Function Tests', function() {
    it("sceneDetails()", function(done) {
     
-        let subjects = [ {  "subject_id": 1,
+        let subjects = [ {  "subject_id": "1",
                             "name": "oscar",
                             "gender": "male"    },
                                 
@@ -15,8 +15,8 @@ describe('Helper Function Tests', function() {
                             "name": "rylee",
                             "gender": "female"  } ];
                             
-        let scenes =    [ { "subjects": [1,2]   },
-                          { "subjects": [2]     },
+        let scenes =    [ { "subjects": [1,"2"]   },
+                          { "subjects": ["2"]     },
                           { "subjects": [1]     } ];
        
         let expected =  [ [ { name: "oscar", gender: "male"   },
