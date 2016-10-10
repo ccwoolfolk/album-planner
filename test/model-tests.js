@@ -5,7 +5,7 @@ let assert = require("assert")
   
 let Album = require(process.env.GOPATH + '/models/event');
 
-const user_id = 1;
+const user_id = "1";
 
 describe('Model Event Tests', function() {
 

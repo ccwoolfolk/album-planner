@@ -2,7 +2,7 @@ exports.data = {
     "collections": {
         "users": [
             {
-                "user_id": 1,
+                "user_id": "1",
                 "user_name": "Test Person",
                 "events": [
                     {
