@@ -22,7 +22,7 @@ app.get("/:userId", (req, res) => model.getEvents(req.params.userId, (err, event
     if (err) 
         console.error(err);
 
-    res.render("events", {events: events});
+    res.render("events", {userId: req.params.userId, events: events});
     
 }));
 
