@@ -62,3 +62,21 @@ exports.removeEvent = function(userId, eventId, cb) {
         }},
         (err, res) => cb(err, res));
 }
+
+exports.getEventDetails = function(userId, eventId, cb) {
+    let db = DB.getDB();
+    db.collection(COLLECTION).find({
+        "user_id": userId,
+        "events.event_id": eventId
+    }, {
+        "_id": 0,
+        "events": 1
+    }).toArray(function(err, results) {
+        let output = results[0].events[0];
+        if (err) {
+            console.error(err);
+            return cb(err);
+        }
+        cb(err, output);
+    })
+}

@@ -75,6 +75,14 @@ describe('Model Event Tests', function() {
         });
     });
 
-
+    it("getEventDetails()", function(done) {
+        let eventId = 1;
+        Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+            assert.equal(eventDetails.name, "birthday party");
+            assert.equal(eventDetails.subjects.length, 2);
+            assert.equal(eventDetails.scenes.length, 3);
+            done();
+        });
+    });
 });
 
