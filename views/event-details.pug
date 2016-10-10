@@ -2,14 +2,24 @@ html
     head
         title= details.name + "(" + details.date + ")"
         link(rel="stylesheet", href="/css/event-details.css", type='text/css' )
+        link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
     body
         
         h1= details.name
         p= details.date
         
-        each scene in details.scenes
         
+        each scene in details.scenes_detailed
             div.scenes
-                h3= scene.name
-                p= scene.date
-                p= "# subjects: " + scene.subjects.length
+                ul.fa-ul
+                    each subject in scene
+                        li= subject.name + " "
+                            if subject.gender =="male"
+                                i(class="fa fa-male fa-li")
+                            else if subject.gender =="female"
+                                i(class="fa fa-female fa-li")
+                            else
+                                i(class="fa fa-question-circle-o fa-li")
+
+        a(href="..")
+            button Back to Events

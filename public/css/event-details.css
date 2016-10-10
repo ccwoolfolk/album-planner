@@ -1,4 +1,13 @@
 .scenes {
-    background-color: gray;
+    background-color: rgb(229,229,229);
     border-radius: 5px;
+    font-size: larger;
+}
+
+.fa-male {
+    color: rgb(80, 155, 217);
+}
+
+.fa-female {
+    color: rgb(227,125,163);
 }
