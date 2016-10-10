@@ -67,10 +67,14 @@ exports.getEventDetails = function(userId, eventId, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({
         "user_id": userId,
-        "events.event_id": parseInt(eventId)
+        "events": {
+            "$elemMatch": {
+                "event_id": parseInt(eventId)
+            }
+        }
     }, {
         "_id": 0,
-        "events": 1
+        "events.$": 1
     }).toArray(function(err, results) {
         if (err) {
             console.error(err);

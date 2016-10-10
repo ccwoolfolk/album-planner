@@ -75,12 +75,22 @@ describe('Model Event Tests', function() {
         });
     });
 
-    it("getEventDetails()", function(done) {
+    it("getEventDetails() first entry", function(done) {
         let eventId = "1";
         Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
             assert.equal(eventDetails.name, "birthday party");
             assert.equal(eventDetails.subjects.length, 2);
             assert.equal(eventDetails.scenes.length, 3);
+            done();
+        });
+    });
+    
+    it("getEventDetails() not first entry", function(done) {
+        let eventId = "3";
+        Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+            assert.equal(eventDetails.name, "second event");
+            assert.equal(eventDetails.subjects.length, 0);
+            assert.equal(eventDetails.scenes.length, 0);
             done();
         });
     });
