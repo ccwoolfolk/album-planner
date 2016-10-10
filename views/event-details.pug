@@ -3,23 +3,31 @@ html
         title= details.name + "(" + details.date + ")"
         link(rel="stylesheet", href="/css/event-details.css", type='text/css' )
         link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
-    body
-        
-        h1= details.name
-        p= details.date
-        
-        
-        each scene in details.scenes_detailed
-            div.scenes
-                ul.fa-ul
-                    each subject in scene
-                        li= subject.name + " "
-                            if subject.gender =="male"
-                                i(class="fa fa-male fa-li")
-                            else if subject.gender =="female"
-                                i(class="fa fa-female fa-li")
-                            else
-                                i(class="fa fa-question-circle-o fa-li")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
 
-        a(href="..")
-            button Back to Events
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript")
+    
+    body
+        div.container
+            div.row
+                div(class="col-xs-12")
+                    h1= details.name
+                    p= details.date        
+            div.row
+                
+                each scene in details.scenes_detailed
+                    div(class="col-sm-3 col-xs-12")
+                        div.scenes
+                            ul.fa-ul
+                                each subject in scene
+                                    li= subject.name + " "
+                                        if subject.gender =="male"
+                                            i(class="fa fa-male fa-li")
+                                        else if subject.gender =="female"
+                                            i(class="fa fa-female fa-li")
+                                        else
+                                            i(class="fa fa-question-circle-o fa-li")
+            div.row
+                div(class="col-xs-12")
+                    a(href="..")
+                        button Back to Events
