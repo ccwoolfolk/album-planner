@@ -2,7 +2,9 @@
 
 const express = require("express");
 const pug = require("pug");
+
 const model = require("./models/event.js");
+const helpers = require(process.env.GOPATH + '/helpers/functions.js');
 
 const fixtures = require('./test/fixtures/model-albums').data;
 
@@ -24,14 +26,17 @@ app.get("/:userId", (req, res) => model.getEvents(req.params.userId, (err, event
     
 }));
 
+
+
 /* Show the event details when provided a user ID and event ID */
 app.get("/:userId/events/:eventId", (req, res) => {
     
     model.getEventDetails(req.params.userId, req.params.eventId, (err, details) => {
         if (err)
             console.error(err)
-        
-        res.render("event-details", {details: details})    ;
+
+        details["scenes_detailed"] = helpers.sceneDetails(details.subjects, details.scenes);
+        res.render("event-details", {details: details});
     });
 });
 
