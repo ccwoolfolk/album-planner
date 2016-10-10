@@ -1,0 +1,15 @@
+html
+    head
+        title= details.name + "(" + details.date + ")"
+        link(rel="stylesheet", href="/public/event-details.css", type='text/css' )
+    body
+        
+        h1= details.name
+        p= details.date
+        
+        each scene in details.scenes
+        
+            div.scenes
+                h3= scene.name
+                p= scene.date
+                p= "# subjects: " + scene.subjects.length

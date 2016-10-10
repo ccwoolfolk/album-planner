@@ -15,6 +15,7 @@ app.set("json spaces", 3);
 
 app.use(express.static("public"));
 
+/* Show the user's events when provided a user ID */
 app.get("/:userId", (req, res) => model.getEvents(req.params.userId, (err, events) => {
     if (err) 
         console.error(err);
@@ -22,6 +23,17 @@ app.get("/:userId", (req, res) => model.getEvents(req.params.userId, (err, event
     res.render("events", {events: events});
     
 }));
+
+/* Show the event details when provided a user ID and event ID */
+app.get("/:userId/events/:eventId", (req, res) => {
+    
+    model.getEventDetails(req.params.userId, req.params.eventId, (err, details) => {
+        if (err)
+            console.error(err)
+        
+        res.render("event-details", {details: details})    ;
+    });
+});
 
 /* testing only */
 app.get("/test/:id", (req, res) => model.all((err, events) => {
