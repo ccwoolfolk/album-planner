@@ -1,14 +1,24 @@
 html
     head
-        title= title
         link(rel="stylesheet", href="css/events.css", type='text/css' )
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript")
     body
-        h1= message
-        
-        each ev in events
-        
-            div.events
-                h3= ev.name
-                p= ev.date
-                a(href=userId + "/events/" + ev.event_id)
-                    button View It
+        div.container
+            div.row
+                each ev in events
+                
+                    div(class="col-sm-3 col-xs-12")
+                        div.events
+                            h3= ev.name
+                            p= ev.date
+                            a(href=userId + "/events/" + ev.event_id)
+                                button View It
+                    
+                div(class="col-sm-3 col-xs-12")
+                    div.events
+                        h3 Add new event
+                        div(class="input-group")
+                            input(type="text" class="form-control" placeholder="Event name")
+                            span(class="input-group-btn")
+                                button(class="btn btn-default" type="button") Go!
