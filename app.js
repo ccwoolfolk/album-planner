@@ -2,6 +2,7 @@
 
 const express = require("express");
 const pug = require("pug");
+const bodyParser = require('body-parser');
 
 const model = require("./models/event.js");
 const helpers = require(process.env.GOPATH + '/helpers/functions.js');
@@ -14,6 +15,10 @@ const DB = require("./db.js");
 // Add middleware
 app.set("view engine", "pug");
 app.set("json spaces", 3);
+
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(express.static("public"));
 app.use(function(req, res, next) {
@@ -33,11 +38,11 @@ app.get("/:userId", (req, res) => model.getEvents(req.params.userId, (err, event
 }));
 
 /* Add a new event */
-app.get("/:userId/addevent/:eventName", (req, res) => {
+app.post("/:userId", (req, res) => {
     let newDate = new Date();
     model.addEvent(
-        req.params.userId, 
-        req.params.eventName, 
+        req.params.userId,
+        req.body.eventName,
         newDate.toString(),
         (err, id) => {
             if (err)

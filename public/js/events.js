@@ -4,6 +4,9 @@ $("document").ready(function() {
         if (eventName === "")
             alert("Please provide an event name!");
         else
-            window.location.href += "/addevent/" + eventName;
+            $.post(window.location.href,
+                {eventName: eventName},
+                (data) => window.location = window.location.href);
+            
     });
 });
