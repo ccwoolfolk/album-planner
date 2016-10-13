@@ -14,10 +14,11 @@ html
             div.row
                 div(class="col-xs-12")
                     h1= details.name
+                        i.fa.fa-pencil-square-o
                     p= details.date        
             div.row
                 
-                each scene in details.scenes_detailed
+                each scene, index in details.scenes_detailed
                     div(class="col-sm-3 col-xs-12")
                         div.scenes
                             ul.fa-ul
@@ -29,6 +30,21 @@ html
                                             i(class="fa fa-female fa-li")
                                         else
                                             i(class="fa fa-question-circle-o fa-li")
+                            div.input-group
+                                div.input-group-btn
+                                    button(id="add-male-"+index class="btn btn-default" type="button")
+                                        i.fa.fa-male
+                                    button(id="add-female-"+index class="btn btn-default" type="button")
+                                        i.fa.fa-female
+                                input(type="text" class="form-control" aria-label="New subject name" placeholder="Name...")
+
+                div(class="col-sm-3 col-xs-12")
+                    div.scenes
+                        h3 Add new scene
+                        div(class="input-group")
+                            span(class="input-group-btn")
+                                button(id="submit-new-event" class="btn btn-default" type="button") +
+            
             div.row
                 div(class="col-xs-12")
                     a(href="..")
