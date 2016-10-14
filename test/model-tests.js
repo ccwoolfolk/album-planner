@@ -94,5 +94,32 @@ describe('Model Event Tests', function() {
             done();
         });
     });
+    
+    it("addScene()", function(done) {
+        Album.addScene(user_id, 1, function(err, result) {
+            Album.getEventDetails(user_id, 1, function(err, eventDetails) {
+                assert.equal(eventDetails.scenes.length, 4);
+                
+                assert.deepEqual(eventDetails.scenes[3].subjects, [])
+                done();
+            });
+
+        });
+    });
+    
+    /*
+    
+    it("addSubject()", function(done) {
+        assert(false);
+        done();
+    });
+    
+    it("updateEventName()", function(done) {
+       assert(false);
+       done();
+    });
+    
+    */
+    
 });
 

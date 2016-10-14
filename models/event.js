@@ -63,7 +63,7 @@ exports.removeEvent = function(userId, eventId, cb) {
         (err, res) => cb(err, res));
 }
 
-exports.getEventDetails = function(userId, eventId, cb) {
+let getEventDetails = function(userId, eventId, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({
         "user_id": userId,
@@ -83,4 +83,31 @@ exports.getEventDetails = function(userId, eventId, cb) {
         let output = results[0].events[0];
         cb(err, output);
     })
+}
+
+exports.getEventDetails = getEventDetails;
+
+exports.addScene = function(userId, eventId, cb) {
+    let db = DB.getDB();
+    
+    // TODO = test and move to helpers?
+    let findEventIndex = function(eventId, events) {
+        for (let i = 0; i < events.length; i++) {
+            if (events[i]["event_id"] == eventId)
+                return i;
+        }
+        
+        return null;
+    }
+    
+    getEvents(userId, function(err, events) {
+        let idx = findEventIndex(eventId, events);
+        console.log("found idx: ", idx)
+        let updateQuery = {};
+        updateQuery["events." + idx + ".scenes"] = {subjects: []}
+        db.collection(COLLECTION).update(
+            {"user_id": userId}, 
+            {$push: updateQuery},
+        (err, res) => cb(err,res));    
+    });
 }

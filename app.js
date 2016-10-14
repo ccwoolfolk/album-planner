@@ -63,6 +63,19 @@ app.get("/:userId/events/:eventId", (req, res) => {
     });
 });
 
+app.post("/:userId/events/:eventId", (req, res) => {
+    let action = req.body.action;
+    let userId = req.params.userId;
+    let eventId = req.params.eventId;
+    console.log("calling post:", userId, eventId)
+    if (action === "new scene") {
+        model.addScene(userId, eventId, (err, result) => {
+            res.redirect("/" + userId + "/events/" + eventId);
+        });
+    }
+})
+    
+
 /* testing only */
 app.get("/test/:id", (req, res) => model.all((err, events) => {
     if (err) 
