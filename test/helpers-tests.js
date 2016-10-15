@@ -1,6 +1,7 @@
 "use strict";
 let assert = require("assert");
-  
+let fixtures = require(process.env.GOPATH + '/test/fixtures/model-albums').data;
+
 const helpers = require(process.env.GOPATH + '/helpers/functions.js');
 
 
@@ -27,4 +28,9 @@ describe('Helper Function Tests', function() {
         assert(helpers.sceneDetails(subjects, scenes), expected);
         done();
    });
+   
+    it("findEventIndex()", function(done) {
+        assert.equal(helpers.findEventIndex(3, fixtures.collections.users[0].events), 1);
+        done();
+    });
 });

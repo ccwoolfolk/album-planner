@@ -3,6 +3,7 @@
 // Thanks to https://www.terlici.com/2014/09/15/node-testing.html
 
 let DB = require('../db');
+const helpers = require(process.env.GOPATH + '/helpers/functions.js');
 
 const COLLECTION = 'users';
 
@@ -89,20 +90,10 @@ exports.getEventDetails = getEventDetails;
 
 exports.addScene = function(userId, eventId, cb) {
     let db = DB.getDB();
-    
-    // TODO = test and move to helpers?
-    let findEventIndex = function(eventId, events) {
-        for (let i = 0; i < events.length; i++) {
-            if (events[i]["event_id"] == eventId)
-                return i;
-        }
-        
-        return null;
-    }
-    
+
     getEvents(userId, function(err, events) {
-        let idx = findEventIndex(eventId, events);
-        console.log("found idx: ", idx)
+        let idx = helpers.findEventIndex(eventId, events);
+
         let updateQuery = {};
         updateQuery["events." + idx + ".scenes"] = {subjects: []}
         db.collection(COLLECTION).update(

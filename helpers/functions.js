@@ -18,3 +18,13 @@ exports.sceneDetails = function(subjects, scenes) {
 
     return scenes.map(convertIds);
 }
+
+    // TODO = test and move to helpers?
+exports.findEventIndex = function(eventId, events) {
+    for (let i = 0; i < events.length; i++) {
+        if (events[i]["event_id"] == eventId)
+            return i;
+    }
+    
+    return null;
+}
