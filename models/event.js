@@ -111,6 +111,10 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
     getEvents(userId, function(err, events) {
         let idx = helpers.findEventIndex(eventId, events);
         
+        // Stop if subject is already in scene
+        if (events[idx].scenes[sceneIdx].subjects.indexOf(newSubject["subject_id"]) !== -1)
+            return cb(err, null);
+        
         let updateQuery = {};
         updateQuery["events." + idx + ".scenes." + sceneIdx + ".subjects"] = newSubject["subject_id"];
         db.collection(COLLECTION).update(
@@ -118,6 +122,7 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
             {$push: updateQuery},
             (err, res) => {
                 if (helpers.subjectIsNew(newSubject, events[idx].subjects)) {
+
                     // Add to subject list
                     let updateQuery = {};
                     updateQuery["events." + idx + ".subjects"] = newSubject;
@@ -126,9 +131,7 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
                         {"user_id": userId},
                         {$push: updateQuery},
                         (err, res) => cb(err, res));
-                } else {
-                    cb(err, res);
-                }
+                } else cb(err, res);
             });
     });
 }

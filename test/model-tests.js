@@ -134,8 +134,8 @@ describe('Model Event Tests', function() {
                     "subject_id": 2 }, function() {
                         
                         Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
-                            //assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [2, 1]);
-                            //assert.equal(eventDetails.subjects.length, 3);
+                            assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [2, 3]);
+                            assert.equal(eventDetails.subjects.length, 3);
                             
                             done();
                         });
