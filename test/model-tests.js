@@ -113,7 +113,6 @@ describe('Model Event Tests', function() {
         let eventId = 1;
         let sceneIdx = 1;
         let newSubject = {
-            "subject_id": 3,
             "name": "casey",
             "gender": "male"
         }
@@ -128,6 +127,7 @@ describe('Model Event Tests', function() {
                 // Subject list updated
                 assert.equal(eventDetails.subjects.length, 3);
                 assert.equal(eventDetails.subjects[2].name, "casey");
+                assert.equal(eventDetails.subjects[2]["subject_id"], 3);
                 
                 // Add existing subject
                 Album.addSubject(user_id, eventId, sceneIdx, {

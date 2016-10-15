@@ -115,6 +115,10 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
         if (events[idx].scenes[sceneIdx].subjects.indexOf(newSubject["subject_id"]) !== -1)
             return cb(err, null);
         
+        // Generate subject_id
+        let newId = 1 + events[idx].subjects.map((val) => val["subject_id"]).reduce((prev, curr) => Math.max(prev, curr));
+        newSubject["subject_id"] = newId;
+        
         let updateQuery = {};
         updateQuery["events." + idx + ".scenes." + sceneIdx + ".subjects"] = newSubject["subject_id"];
         db.collection(COLLECTION).update(
@@ -123,6 +127,8 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
             (err, res) => {
                 if (helpers.subjectIsNew(newSubject, events[idx].subjects)) {
 
+                    
+                    
                     // Add to subject list
                     let updateQuery = {};
                     updateQuery["events." + idx + ".subjects"] = newSubject;
