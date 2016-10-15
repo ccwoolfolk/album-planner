@@ -96,9 +96,26 @@ exports.addScene = function(userId, eventId, cb) {
 
         let updateQuery = {};
         updateQuery["events." + idx + ".scenes"] = {subjects: []}
+
         db.collection(COLLECTION).update(
             {"user_id": userId}, 
             {$push: updateQuery},
         (err, res) => cb(err,res));    
+    });
+}
+
+
+exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
+    let db = DB.getDB();
+    
+    getEvents(userId, function(err, events) {
+        let idx = helpers.findEventIndex(eventId, events);
+        
+        let updateQuery = {};
+        updateQuery["events." + idx + ".scenes." + sceneIdx + ".subjects"] = newSubject["subject_id"];
+        db.collection(COLLECTION).update(
+            {"user_id": userId},
+            {$push: updateQuery},
+            (err, res) => cb(err, res));
     });
 }

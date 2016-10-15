@@ -107,13 +107,43 @@ describe('Model Event Tests', function() {
         });
     });
     
-    /*
+    
     
     it("addSubject()", function(done) {
-        assert(false);
-        done();
+        let eventId = 1;
+        let sceneIdx = 1;
+        let newSubject = {
+            "subject_id": 3,
+            "name": "casey",
+            "gender": "male"
+        }
+        
+        // Add new subject
+        Album.addSubject(user_id, eventId, sceneIdx, newSubject, function() {
+            Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+
+                assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [2, 3]);
+                //assert.equal(eventDetails.subjects.length, 3);
+                //assert.equal(eventDetails.subjects[2].name, "casey");
+                
+                // Add existing subject
+                Album.addSubject(user_id, eventId, sceneIdx, {
+                    "subject_id": 2 }, function() {
+                        
+                        Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+                            //assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [2, 1]);
+                            //assert.equal(eventDetails.subjects.length, 3);
+                            
+                            done();
+                        });
+                });
+            });
+                
+                
+        });
     });
     
+    /*
     it("updateEventName()", function(done) {
        assert(false);
        done();
