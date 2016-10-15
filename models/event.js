@@ -116,6 +116,19 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
         db.collection(COLLECTION).update(
             {"user_id": userId},
             {$push: updateQuery},
-            (err, res) => cb(err, res));
+            (err, res) => {
+                if (helpers.subjectIsNew(newSubject, events[idx].subjects)) {
+                    // Add to subject list
+                    let updateQuery = {};
+                    updateQuery["events." + idx + ".subjects"] = newSubject;
+                    
+                    db.collection(COLLECTION).update(
+                        {"user_id": userId},
+                        {$push: updateQuery},
+                        (err, res) => cb(err, res));
+                } else {
+                    cb(err, res);
+                }
+            });
     });
 }

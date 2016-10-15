@@ -33,4 +33,11 @@ describe('Helper Function Tests', function() {
         assert.equal(helpers.findEventIndex(3, fixtures.collections.users[0].events), 1);
         done();
     });
+    
+    it("subjectIsNew()", function(done) {
+        assert(!helpers.subjectIsNew({"subject_id": 1}, fixtures.collections.users[0].events[0].subjects))
+        assert(!helpers.subjectIsNew({"subject_id": 2}, fixtures.collections.users[0].events[0].subjects))
+        assert(helpers.subjectIsNew({"subject_id": 3}, fixtures.collections.users[0].events[0].subjects))
+        done();
+    })
 });

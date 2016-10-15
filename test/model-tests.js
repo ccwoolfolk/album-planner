@@ -122,9 +122,12 @@ describe('Model Event Tests', function() {
         Album.addSubject(user_id, eventId, sceneIdx, newSubject, function() {
             Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
 
+                // Scene updated
                 assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [2, 3]);
-                //assert.equal(eventDetails.subjects.length, 3);
-                //assert.equal(eventDetails.subjects[2].name, "casey");
+                
+                // Subject list updated
+                assert.equal(eventDetails.subjects.length, 3);
+                assert.equal(eventDetails.subjects[2].name, "casey");
                 
                 // Add existing subject
                 Album.addSubject(user_id, eventId, sceneIdx, {

@@ -19,7 +19,6 @@ exports.sceneDetails = function(subjects, scenes) {
     return scenes.map(convertIds);
 }
 
-    // TODO = test and move to helpers?
 exports.findEventIndex = function(eventId, events) {
     for (let i = 0; i < events.length; i++) {
         if (events[i]["event_id"] == eventId)
@@ -27,4 +26,10 @@ exports.findEventIndex = function(eventId, events) {
     }
     
     return null;
+}
+
+
+exports.subjectIsNew = function(subject, existingSubjects) {
+    let existingIds = existingSubjects.map((val) => { return val["subject_id"] });
+    return existingIds.indexOf(subject["subject_id"]) === -1;
 }
