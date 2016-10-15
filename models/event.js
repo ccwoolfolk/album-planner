@@ -117,7 +117,7 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
             return cb(err, null);
         
         // Generate subject_id
-        let newId = 1 + events[idx].subjects.map((val) => val["subject_id"]).reduce((prev, curr) => Math.max(prev, curr));
+        let newId = 1 + events[idx].subjects.map((val) => val["subject_id"]).reduce((prev, curr) => Math.max(prev, curr), 0);
         newSubject["subject_id"] = newId;
         
         let updateQuery = {};
