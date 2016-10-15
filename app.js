@@ -67,13 +67,21 @@ app.post("/:userId/events/:eventId", (req, res) => {
     let action = req.body.action;
     let userId = req.params.userId;
     let eventId = req.params.eventId;
-    console.log("calling post:", userId, eventId)
-    if (action === "new scene") {
-        model.addScene(userId, eventId, (err, result) => {
-            res.redirect("/" + userId + "/events/" + eventId);
-        });
+    let cb = (err, result) => res.redirect("/" + userId + "/events/" + eventId);
+    
+
+    if (action === "new scene")
+        model.addScene(userId, eventId, cb);
+
+    if (action === "new subject") {
+        let newSubject = {
+            name: req.body.name,
+            gender: req.body.gender
+        }
+        model.addSubject(userId, eventId, req.body.sceneIdx, newSubject, cb);
     }
-})
+    
+});
     
 
 /* testing only */

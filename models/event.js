@@ -107,6 +107,7 @@ exports.addScene = function(userId, eventId, cb) {
 
 exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
     let db = DB.getDB();
+    sceneIdx = parseInt(sceneIdx);
     
     getEvents(userId, function(err, events) {
         let idx = helpers.findEventIndex(eventId, events);
@@ -126,9 +127,7 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
             {$push: updateQuery},
             (err, res) => {
                 if (helpers.subjectIsNew(newSubject, events[idx].subjects)) {
-
-                    
-                    
+                
                     // Add to subject list
                     let updateQuery = {};
                     updateQuery["events." + idx + ".subjects"] = newSubject;

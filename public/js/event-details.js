@@ -1,5 +1,5 @@
 $("document").ready(function() {
-    console.log("loaded")
+    
     $("#submit-new-scene").click(function() {
         console.log("clicked")
 
@@ -8,4 +8,23 @@ $("document").ready(function() {
             (data) => window.location = window.location.href);
             
     });
+    
+    ["female", "male"].forEach(function(gender) {
+        $(".add-" + gender).click(function() {
+            var sceneIdx = $(this).attr("id").replace("scene-", "");
+            createSubjectMaker(gender, sceneIdx)()
+        });
+    });
+    
 });
+
+function createSubjectMaker(gender, sceneIdx) {
+    return function(name) {
+        $.post(window.location.href,
+            {   action: "new subject",
+                name: $("#new-subject-name-" + sceneIdx).val(),
+                gender: gender,
+                sceneIdx: sceneIdx},
+            (data) => window.location = window.location.href);
+    }
+}
