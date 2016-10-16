@@ -74,10 +74,18 @@ app.post("/:userId/events/:eventId", (req, res) => {
         model.addScene(userId, eventId, cb);
 
     if (action === "new subject") {
-        let newSubject = {
-            name: req.body.name,
-            gender: req.body.gender
-        }
+        let subjectIdx = req.body.subjectIdx;
+        let newSubject = {};
+        
+        if (subjectIdx !== undefined)
+            newSubject.subjectIdx = subjectIdx;
+            
+        else 
+            newSubject = {
+                name: req.body.name,
+                gender: req.body.gender
+            }
+        
         model.addSubject(userId, eventId, req.body.sceneIdx, newSubject, cb);
     }
     

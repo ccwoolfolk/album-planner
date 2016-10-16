@@ -112,13 +112,18 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
     getEvents(userId, function(err, events) {
         let idx = helpers.findEventIndex(eventId, events);
         
+        // Generate subject_id if not adding an existing subject or use an existing subject
+        console.log(newSubject)
+        if (newSubject.hasOwnProperty("subjectIdx")) {
+            newSubject = events[idx].subjects[newSubject.subjectIdx];
+        } else {
+            let newId = 1 + events[idx].subjects.map((val) => val["subject_id"]).reduce((prev, curr) => Math.max(prev, curr), 0);
+            newSubject["subject_id"] = newId;
+        }
+        
         // Stop if subject is already in scene
         if (events[idx].scenes[sceneIdx].subjects.indexOf(newSubject["subject_id"]) !== -1)
             return cb(err, null);
-        
-        // Generate subject_id
-        let newId = 1 + events[idx].subjects.map((val) => val["subject_id"]).reduce((prev, curr) => Math.max(prev, curr), 0);
-        newSubject["subject_id"] = newId;
         
         let updateQuery = {};
         updateQuery["events." + idx + ".scenes." + sceneIdx + ".subjects"] = newSubject["subject_id"];

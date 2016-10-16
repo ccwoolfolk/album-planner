@@ -108,6 +108,26 @@ describe('Model Event Tests', function() {
     });
     
     
+    it("addSubject() with existing subject", function(done) {
+        let eventId = 1;
+        let sceneIdx = 1;
+        let newSubject = {
+            subjectIdx: 0
+        }
+        
+        Album.addSubject(user_id, eventId, sceneIdx, newSubject, function() {
+            Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+                
+                // Scene updated
+                assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [2, 1]);
+                
+                // Subject list not updated
+                assert.equal(eventDetails.subjects.length, 2);
+                
+                done();
+            });
+        });
+    });
     
     it("addSubject()", function(done) {
         let eventId = 1;

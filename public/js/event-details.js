@@ -16,15 +16,29 @@ $("document").ready(function() {
         });
     });
     
+    $(".dropdown-choice").click(function() {
+        var idArr = $(this).attr("id").split("-")
+
+        if (idArr.length !== 4)
+            return alert("Misformed subject identification");
+        
+        var sceneIdx = idArr[1];
+        var subjectIdx = idArr[3];
+        
+        createSubjectMaker(null, sceneIdx, subjectIdx)();
+    })
+    
 });
 
-function createSubjectMaker(gender, sceneIdx) {
+function createSubjectMaker(gender, sceneIdx, subjectIdx) {
     return function(name) {
         $.post(window.location.href,
             {   action: "new subject",
                 name: $("#new-subject-name-" + sceneIdx).val(),
                 gender: gender,
-                sceneIdx: sceneIdx},
+                sceneIdx: sceneIdx,
+                subjectIdx: subjectIdx
+            },
             (data) => window.location = window.location.href);
     }
 }

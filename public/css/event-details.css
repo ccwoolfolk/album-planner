@@ -11,3 +11,8 @@
 .fa-female {
     color: rgb(227,125,163);
 }
+
+.dropdown-menu li:hover {
+    cursor: pointer;
+    background-color: rgb(209,204,255);
+}

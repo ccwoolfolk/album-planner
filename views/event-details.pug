@@ -38,6 +38,15 @@ html
                                         i.fa.fa-male
                                     button(id="scene-"+index class="btn btn-default add-female" type="button")
                                         i.fa.fa-female
+                                        
+                                    button(type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                                        span.caret
+                                        span.sr-only Toggle Dropdown
+                                    
+                                    ul.dropdown-menu
+                                        each subject, subjectIndex in details.subjects
+                                            li.dropdown-choice(id="scene-"+index+"-subject-"+subjectIndex)= subject.name
+                                        
                                 input(id="new-subject-name-"+index type="text" class="form-control" aria-label="New subject name" placeholder="Name...")
 
                 div(class="col-sm-3 col-xs-12")
