@@ -151,7 +151,7 @@ describe('Model Event Tests', function() {
                 
                 // Add existing subject
                 Album.addSubject(user_id, eventId, sceneIdx, {
-                    "subject_id": 2 }, function() {
+                    "subjectIdx": 1 }, function() {
                         
                         Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
                             assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [2, 3]);
@@ -161,10 +161,26 @@ describe('Model Event Tests', function() {
                         });
                 });
             });
-                
-                
         });
     });
+    
+    it("removeSubject()", function(done) {
+        let eventId = 1;
+        let sceneIdx = 0;
+        let subjectIdx = 1;
+        
+        Album.removeSubject(user_id, eventId, sceneIdx, subjectIdx, function() {
+            Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+                console.log("testing removeSubject")
+                console.log(eventDetails.scenes[sceneIdx].subjects.length == 1)
+
+                assert(eventDetails.scenes[sceneIdx].subjects.length == 1)
+                assert.equal(eventDetails.scenes[sceneIdx].subjects.length, 1);
+                assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [1]);
+                done();
+            })
+        })
+    })
     
     /*
     it("updateEventName()", function(done) {

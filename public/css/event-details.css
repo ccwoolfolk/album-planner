@@ -16,3 +16,12 @@
     cursor: pointer;
     background-color: rgb(209,204,255);
 }
+
+.remove-subject {
+    cursor: pointer;
+    float: right;
+    margin-right: 10px;
+    background-color: white;
+    border-radius: 3px;
+    padding: 1px;
+}

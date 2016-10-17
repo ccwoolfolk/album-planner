@@ -104,6 +104,26 @@ exports.addScene = function(userId, eventId, cb) {
     });
 }
 
+exports.removeSubject = function(userId, eventId, sceneIdx, subjectIdx, cb) {
+    let db = DB.getDB();
+    sceneIdx = parseInt(sceneIdx);
+    
+    getEvents(userId, function(err, events) {
+        let idx = helpers.findEventIndex(eventId, events);
+        let newSubjectArr = events[idx].scenes[sceneIdx].subjects.slice();
+        newSubjectArr.splice(subjectIdx, 1);
+        
+        let updateQuery = {}
+        updateQuery["events." + idx + ".scenes." + sceneIdx + ".subjects"] = newSubjectArr;
+        
+        db.collection(COLLECTION).update(
+            {"user_id": userId},
+            {$set: updateQuery},
+            (err, res) => cb(err, res)  );
+            
+    });
+}
+
 
 exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
     let db = DB.getDB();
@@ -113,7 +133,6 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
         let idx = helpers.findEventIndex(eventId, events);
         
         // Generate subject_id if not adding an existing subject or use an existing subject
-        console.log(newSubject)
         if (newSubject.hasOwnProperty("subjectIdx")) {
             newSubject = events[idx].subjects[newSubject.subjectIdx];
         } else {

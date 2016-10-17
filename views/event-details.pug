@@ -24,7 +24,7 @@ html
                     div(class="col-sm-3 col-xs-12")
                         div.scenes
                             ul.fa-ul
-                                each subject in scene
+                                each subject, subjectIdx in scene
                                     li= subject.name + " "
                                         if subject.gender =="male"
                                             i(class="fa fa-male fa-li")
@@ -32,6 +32,8 @@ html
                                             i(class="fa fa-female fa-li")
                                         else
                                             i(class="fa fa-question-circle-o fa-li")
+                                        i.fa.fa-close.remove-subject(id="scene-"+index+"-subject-"+subjectIdx+"-remove")
+                                        
                             div.input-group
                                 div.input-group-btn
                                     button(id="scene-"+index class="btn btn-default add-male" type="button")

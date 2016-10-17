@@ -63,6 +63,10 @@ app.get("/:userId/events/:eventId", (req, res) => {
     });
 });
 
+app.delete("/:userId/events/:eventId", (req, res) => {
+
+});
+
 app.post("/:userId/events/:eventId", (req, res) => {
     let action = req.body.action;
     let userId = req.params.userId;
@@ -73,7 +77,7 @@ app.post("/:userId/events/:eventId", (req, res) => {
     if (action === "new scene")
         model.addScene(userId, eventId, cb);
 
-    if (action === "new subject") {
+    else if (action === "new subject") {
         let subjectIdx = req.body.subjectIdx;
         let newSubject = {};
         
@@ -87,6 +91,13 @@ app.post("/:userId/events/:eventId", (req, res) => {
             }
         
         model.addSubject(userId, eventId, req.body.sceneIdx, newSubject, cb);
+
+    } else if (action == "remove subject") {
+        
+        let sceneIdx = req.body.sceneIdx;
+        let subjectIdx = req.body.subjectIdx;
+        
+        model.removeSubject(userId, eventId, sceneIdx, subjectIdx, cb);        
     }
     
 });
