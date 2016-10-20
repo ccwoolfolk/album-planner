@@ -171,9 +171,6 @@ describe('Model Event Tests', function() {
         
         Album.removeSubject(user_id, eventId, sceneIdx, subjectIdx, function() {
             Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
-                console.log("testing removeSubject")
-                console.log(eventDetails.scenes[sceneIdx].subjects.length == 1)
-
                 assert(eventDetails.scenes[sceneIdx].subjects.length == 1)
                 assert.equal(eventDetails.scenes[sceneIdx].subjects.length, 1);
                 assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [1]);
@@ -182,13 +179,18 @@ describe('Model Event Tests', function() {
         })
     })
     
-    /*
     it("updateEventName()", function(done) {
-       assert(false);
-       done();
+        let newEventName = "new birthday event"
+        let eventId = 1;
+        
+        Album.updateEventName(newEventName, user_id, eventId, function() {
+            Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+                assert.equal(eventDetails.name, newEventName);
+                done();
+            });
+        });
     });
     
-    */
     
 });
 

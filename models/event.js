@@ -125,6 +125,22 @@ exports.removeSubject = function(userId, eventId, sceneIdx, subjectIdx, cb) {
 }
 
 
+exports.updateEventName = function(newName, userId, eventId, cb) {
+    let db = DB.getDB();
+    
+    getEvents(userId, function(err, events) {
+        let idx = helpers.findEventIndex(eventId, events);
+        let updateQuery = {}
+        updateQuery["events." + idx + ".name"] = newName;
+        
+        db.collection(COLLECTION).update(
+            {"user_id": userId},
+            {$set: updateQuery},
+            (err, res) => cb(err, res)  );
+    });
+}
+
+
 exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
     let db = DB.getDB();
     sceneIdx = parseInt(sceneIdx);
