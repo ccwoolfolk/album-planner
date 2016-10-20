@@ -15,9 +15,17 @@ html
         div.container
             div.row
                 div(class="col-xs-12")
-                    h1= details.name
-                        i.fa.fa-pencil-square-o
-                    p= details.date        
+                    div(id="name-edit-container")
+                    
+                        div.input-group
+                            input(id="input-name-edit" type="text" class="form-control" placeholder= details.name)
+                            span.input-group-btn
+                                button.btn.btn-default(id="btn-submit-name" type="button") Go!
+
+                    div#name-container
+                        h1= details.name
+                            i.fa.fa-pencil-square-o(id="btn-edit-name")
+                        p= details.date
             div.row
                 
                 each scene, index in details.scenes_detailed

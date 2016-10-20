@@ -1,3 +1,13 @@
+#name-edit-container {
+    display: none;
+}
+
+#btn-edit-name {
+    cursor: pointer;
+    color: rgb(150, 150, 150);
+    font-size: smaller;
+}
+
 .scenes {
     background-color: rgb(229,229,229);
     border-radius: 5px;

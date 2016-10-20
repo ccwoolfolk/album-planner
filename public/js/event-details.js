@@ -1,11 +1,22 @@
 $("document").ready(function() {
     
+    $("#btn-edit-name").click(function() {
+        
+        $("#name-container").css("display", "none");
+        $("#name-edit-container").show("fast");
+        $("#btn-submit-name").click(function() {
+            $.post(window.location.href,
+                {action: "edit name",
+                 name: $("#input-name-edit").val()},
+                 refresh);
+        });
+    });
+    
     $("#submit-new-scene").click(function() {
-        console.log("clicked")
 
         $.post(window.location.href,
             {action: "new scene"},
-            (data) => window.location = window.location.href);
+            refresh);
             
     });
     

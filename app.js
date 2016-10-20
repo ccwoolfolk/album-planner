@@ -98,6 +98,8 @@ app.post("/:userId/events/:eventId", (req, res) => {
         let subjectIdx = req.body.subjectIdx;
         
         model.removeSubject(userId, eventId, sceneIdx, subjectIdx, cb);        
+    } else if (action == "edit name") {
+        model.updateEventName(req.body.name, userId, eventId, cb);
     }
     
 });
