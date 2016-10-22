@@ -2,7 +2,8 @@
 
 const express = require("express");
 const pug = require("pug");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const model = require("./models/event.js");
 const helpers = require(process.env.GOPATH + '/helpers/functions.js');
@@ -27,6 +28,104 @@ app.use(function(req, res, next) {
    else
        next();
 });
+
+
+
+
+
+var FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.use(new FacebookStrategy({
+    clientID: "1791667527746166",
+    clientSecret: "ed3f7bd8a346109958a8a9f03798d548",
+    callbackURL: "http://album-planner-ccwoolfolk.c9users.io/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+  }
+));
+
+
+// Express and Passport Session
+var session = require('express-session');
+app.use(session({secret: "mycustomsessionsecretxyzabc"}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+  // placeholder for custom user serialization
+  // null is for errors
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  // placeholder for custom user deserialization.
+  // maybe you are going to get the user from mongo by id?
+  // null is for errors
+  done(null, user);
+});
+
+
+
+// main menu route
+app.get('/', function (req, res) {
+  var html = "<ul>\
+    <li><a href='/auth/facebook'>Facebook</a></li>\
+    <li><a href='/logout'>logout</a></li>\
+  </ul>";
+    
+    // dump the user for debugging
+    if (req.isAuthenticated()) {
+      html += "<p>authenticated as user:</p>"
+      html += "<pre>" + JSON.stringify(req.user, null, 4) + "</pre>";
+    }
+
+
+  res.send(html);
+});
+
+
+app.get('/logout', function(req, res){
+  console.log('logging out');
+  req.logout();
+  res.redirect('/');
+});
+
+// we will call this to start the Facebook Login process
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+// Facebook will call this URL
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
+  }
+);
+
+
+// Simple middleware to ensure user is authenticated.
+// Use this middleware on any resource that needs to be protected.
+// If the request is authenticated (typically via a persistent login session),
+// the request will proceed.  Otherwise, the user will be redirected to the
+// login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    // req.user is available for use here
+    return next(); }
+
+  // denied. redirect to login
+  res.redirect('/')
+}
+
+app.get('/protected', ensureAuthenticated, function(req, res) {
+  res.send("access granted. secure stuff happens here");
+});
+
+
+
+
+
+
+
 
 /* Show the user's events when provided a user ID */
 app.get("/:userId", (req, res) => model.getEvents(req.params.userId, (err, events) => {
