@@ -41,7 +41,8 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://album-planner-ccwoolfolk.c9users.io/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    return done(null, profile);
+      return model.getUserId(profile.provider, profile.id, done);
+    //return done(null, profile);
   }
 ));
 
@@ -117,7 +118,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.get('/protected', ensureAuthenticated, function(req, res) {
-  res.send("access granted. secure stuff happens here");
+  res.json(req);
 });
 
 
@@ -128,16 +129,16 @@ app.get('/protected', ensureAuthenticated, function(req, res) {
 
 
 /* Show the user's events when provided a user ID */
-app.get("/:userId", (req, res) => model.getEvents(req.params.userId, (err, events) => {
+app.get("/events", ensureAuthenticated, (req, res) => model.getEvents(req.user, (err, events) => {
     if (err) 
         console.error(err);
 
-    res.render("events", {userId: req.params.userId, events: events});
+    res.render("events", {userId: req.user, events: events});
     
 }));
 
 /* Add a new event */
-app.post("/:userId", (req, res) => {
+app.post("/:userId", ensureAuthenticated, (req, res) => {
     let newDate = new Date();
     model.addEvent(
         req.params.userId,
@@ -151,7 +152,7 @@ app.post("/:userId", (req, res) => {
 });
 
 /* Show the event details when provided a user ID and event ID */
-app.get("/:userId/events/:eventId", (req, res) => {
+app.get("/:userId/events/:eventId", ensureAuthenticated, (req, res) => {
     
     model.getEventDetails(req.params.userId, req.params.eventId, (err, details) => {
         if (err)
@@ -162,11 +163,11 @@ app.get("/:userId/events/:eventId", (req, res) => {
     });
 });
 
-app.delete("/:userId/events/:eventId", (req, res) => {
+app.delete("/:userId/events/:eventId", ensureAuthenticated, (req, res) => {
 
 });
 
-app.post("/:userId/events/:eventId", (req, res) => {
+app.post("/:userId/events/:eventId", ensureAuthenticated, (req, res) => {
     let action = req.body.action;
     let userId = req.params.userId;
     let eventId = req.params.eventId;
