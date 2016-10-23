@@ -180,3 +180,21 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
             });
     });
 }
+
+exports.getUserId = function(provider, loginId, cb) {
+    let db = DB.getDB();
+    
+    db.collection(COLLECTION).find({
+        provider: provider,
+        login_id: loginId
+    }, {
+        "_id": 0,
+        "user_id": 1
+    }).toArray(function(err, results) {
+        console.log(results);
+        if (results.length !== 1)
+            return cb(new Error("Found multiple users with this authentication info"), null);
+            
+        cb(err, results[0]["user_id"]);
+    });
+}

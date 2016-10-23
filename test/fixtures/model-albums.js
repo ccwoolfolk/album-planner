@@ -4,6 +4,8 @@ exports.data = {
             {
                 "user_id": "1",
                 "user_name": "Test Person",
+                "provider": "facebook",
+                "login_id": "10101068906050962",
                 "events": [
                     {
                         "event_id": 1,

@@ -191,6 +191,16 @@ describe('Model Event Tests', function() {
         });
     });
     
+    it("getUserId()", function(done) {
+       let provider = "facebook";
+       let loginId = "10101068906050962";
+       
+       Album.getUserId(provider, loginId, function(err, userId) {
+           assert.equal(userId, "1");
+           done();
+       });
+       
+    });
     
 });
 
