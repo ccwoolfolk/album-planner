@@ -23,6 +23,19 @@ exports.User = function(params) {
     }
 }
 
+exports.addUser = function(newUser, cb) {
+    let db = DB.getDB();
+    db.collection(COLLECTION).find({},{_id: 0, user_id: 1}).toArray(function(err, results) {
+        if (err) {
+            console.error(err);
+            return cb(err, null);
+        }
+        
+        let idArr = results.map((val) => {return parseInt(val.user_id)});
+        newUser.user_id = (idArr.reduce(Math.max) + 1).toString();
+        db.collection(COLLECTION).insert(newUser, cb);
+    });
+}
 
 // Get all users
 exports.all = function(cb) {

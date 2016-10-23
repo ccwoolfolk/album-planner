@@ -50,8 +50,22 @@ describe('Model Event Tests', function() {
     });
     
     it("addUser()", function(done) {
-        //assert(false);
-        done();
+        
+        let newUser = new Album.User({
+            "user_name": "Alf",
+            "provider": "alfco",
+            "login_id": "10"
+        });
+        
+        Album.addUser(newUser, function(err, results) {
+            Album.all(function(err, users) {
+                assert.equal(users.length, 2);
+                assert.equal(users[0].user_name, "Alf");
+                assert(users[0].hasOwnProperty("user_id"));
+                assert(users[0].user_id, "2");
+                done();
+            });
+        });
     });
     
     it("getEvents()", function(done) {
@@ -213,7 +227,7 @@ describe('Model Event Tests', function() {
         });
     });
     
-    it("getUserId()", function(done) {
+    it("getUserId() with existing user", function(done) {
        let provider = "facebook";
        let loginId = "10101068906050962";
        
@@ -222,6 +236,10 @@ describe('Model Event Tests', function() {
            done();
        });
        
+    });
+    
+    it("getUserId() with new user", function(done) {
+        done();
     });
     
 });
