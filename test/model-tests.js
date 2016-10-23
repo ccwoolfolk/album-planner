@@ -58,6 +58,7 @@ describe('Model Event Tests', function() {
         });
         
         Album.addUser(newUser, function(err, results) {
+            
             Album.all(function(err, users) {
                 assert.equal(users.length, 2);
                 assert.equal(users[0].user_name, "Alf");
@@ -239,7 +240,13 @@ describe('Model Event Tests', function() {
     });
     
     it("getUserId() with new user", function(done) {
-        done();
+        let provider = "facebook";
+        let loginId = "somethingfake";
+        
+        Album.getUserId(provider, loginId, function(err, userId) {
+            assert.equal(userId, "2");
+            done();
+        });
     });
     
 });

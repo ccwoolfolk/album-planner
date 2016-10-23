@@ -73,6 +73,7 @@ app.get('/', function (req, res) {
   var html = "<ul>\
     <li><a href='/auth/facebook'>Facebook</a></li>\
     <li><a href='/logout'>logout</a></li>\
+    <li><a href='/events'>events</a></li>\
   </ul>";
     
     // dump the user for debugging

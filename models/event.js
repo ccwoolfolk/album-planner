@@ -9,7 +9,7 @@ const COLLECTION = 'users';
 
 // User object for adding new users
 // 'params' object has user_name, provider, login_id keys
-exports.User = function(params) {
+let User = function(params) {
     ["user_name", "provider", "login_id"].forEach((val) => {
         if (!params.hasOwnProperty(val))
             throw new Error("User object lacks '" + val + "' key");
@@ -23,7 +23,9 @@ exports.User = function(params) {
     }
 }
 
-exports.addUser = function(newUser, cb) {
+exports.User = User;
+
+let addUser = function(newUser, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({},{_id: 0, user_id: 1}).toArray(function(err, results) {
         if (err) {
@@ -36,6 +38,8 @@ exports.addUser = function(newUser, cb) {
         db.collection(COLLECTION).insert(newUser, cb);
     });
 }
+
+exports.addUser = addUser;
 
 // Get all users
 exports.all = function(cb) {
@@ -211,7 +215,7 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
     });
 }
 
-exports.getUserId = function(provider, loginId, cb) {
+let getUserId = function(provider, loginId, cb) {
     let db = DB.getDB();
     
     db.collection(COLLECTION).find({
@@ -221,9 +225,20 @@ exports.getUserId = function(provider, loginId, cb) {
         "_id": 0,
         "user_id": 1
     }).toArray(function(err, results) {
-        if (results.length !== 1)
+        if (results.length > 1)
             return cb(new Error("Found multiple users with this authentication info"), null);
+        
+        if (results.length === 0)
+            return addUser(new User({
+                "user_name": "",
+                "provider": provider,
+                "login_id": loginId
+            }), function() {
+                return getUserId(provider, loginId, cb);
+            });
             
         cb(err, results[0]["user_id"]);
     });
 }
+
+exports.getUserId = getUserId;
