@@ -32,6 +32,28 @@ describe('Model Event Tests', function() {
         });
     });
     
+    it("User()", function(done) {
+       let testUser = new Album.User({
+           "user_name": "Testy McTestface",
+           "provider": "facebook",
+           "login_id": "12345"
+       });
+       
+       assert.equal(testUser.user_name, "Testy McTestface");
+       assert.equal(testUser.provider, "facebook");
+       assert.equal(testUser.login_id, "12345");
+       assert(testUser.hasOwnProperty("events"));
+       assert.equal(testUser.events.length, 0);
+       
+       assert.throws(() => {return new Album.User({wrong_key: 123})});
+       done();
+    });
+    
+    it("addUser()", function(done) {
+        //assert(false);
+        done();
+    });
+    
     it("getEvents()", function(done) {
         Album.getEvents(user_id, function(err, results) {
             assert.equal(results.length, 2);

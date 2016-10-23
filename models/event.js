@@ -7,6 +7,23 @@ const helpers = require(process.env.GOPATH + '/helpers/functions.js');
 
 const COLLECTION = 'users';
 
+// User object for adding new users
+// 'params' object has user_name, provider, login_id keys
+exports.User = function(params) {
+    ["user_name", "provider", "login_id"].forEach((val) => {
+        if (!params.hasOwnProperty(val))
+            throw new Error("User object lacks '" + val + "' key");
+    });
+    
+    return {
+        "user_name": params.user_name,
+        "provider": params.provider,
+        "login_id": params.login_id,
+        "events": []
+    }
+}
+
+
 // Get all users
 exports.all = function(cb) {
   let db = DB.getDB();
@@ -191,7 +208,6 @@ exports.getUserId = function(provider, loginId, cb) {
         "_id": 0,
         "user_id": 1
     }).toArray(function(err, results) {
-        console.log(results);
         if (results.length !== 1)
             return cb(new Error("Found multiple users with this authentication info"), null);
             
