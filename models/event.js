@@ -34,7 +34,7 @@ let addUser = function(newUser, cb) {
         }
         
         let idArr = results.map((val) => {return parseInt(val.user_id)});
-        newUser.user_id = (idArr.reduce(Math.max) + 1).toString();
+        newUser.user_id = (Math.max.apply(null, idArr) + 1).toString();
         db.collection(COLLECTION).insert(newUser, cb);
     });
 }
@@ -234,6 +234,7 @@ let getUserId = function(provider, loginId, cb) {
                 "provider": provider,
                 "login_id": loginId
             }), function() {
+                console.log("Adding", loginId, "from", provider);
                 return getUserId(provider, loginId, cb);
             });
             
