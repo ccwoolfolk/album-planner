@@ -71,6 +71,11 @@ passport.deserializeUser(function(user, done) {
 
 // main menu route
 app.get('/', function (req, res) {
+    
+    let renderData = {};
+    renderData.userId = (req.isAuthenticated() ? req.user : "n/a");
+    res.render("index", renderData);
+    /*
   var html = "<ul>\
     <li><a href='/auth/facebook'>Facebook</a></li>\
     <li><a href='/logout'>logout</a></li>\
@@ -85,6 +90,7 @@ app.get('/', function (req, res) {
 
 
   res.send(html);
+  */
 });
 
 
