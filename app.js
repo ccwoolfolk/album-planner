@@ -41,6 +41,7 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://album-planner-ccwoolfolk.c9users.io/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+      //console.log("Profile:", profile);
       return model.getUserId(profile.provider, profile.id, done);
     //return done(null, profile);
   }
@@ -139,23 +140,23 @@ app.get("/events", ensureAuthenticated, (req, res) => model.getEvents(req.user, 
 }));
 
 /* Add a new event */
-app.post("/:userId", ensureAuthenticated, (req, res) => {
+app.post("/events", ensureAuthenticated, (req, res) => {
     let newDate = new Date();
     model.addEvent(
-        req.params.userId,
+        req.user,
         req.body.eventName,
         newDate.toString(),
         (err, id) => {
             if (err)
                 console.error(err);
-            res.redirect(req.params.userId);
+            res.redirect("/events");
         });
 });
 
 /* Show the event details when provided a user ID and event ID */
-app.get("/:userId/events/:eventId", ensureAuthenticated, (req, res) => {
+app.get("/events/:eventId", ensureAuthenticated, (req, res) => {
     
-    model.getEventDetails(req.params.userId, req.params.eventId, (err, details) => {
+    model.getEventDetails(req.user, req.params.eventId, (err, details) => {
         if (err)
             console.error(err)
 
@@ -164,16 +165,12 @@ app.get("/:userId/events/:eventId", ensureAuthenticated, (req, res) => {
     });
 });
 
-app.delete("/:userId/events/:eventId", ensureAuthenticated, (req, res) => {
 
-});
-
-app.post("/:userId/events/:eventId", ensureAuthenticated, (req, res) => {
+app.post("/events/:eventId", ensureAuthenticated, (req, res) => {
     let action = req.body.action;
-    let userId = req.params.userId;
+    let userId = req.user;
     let eventId = req.params.eventId;
-    let cb = (err, result) => res.redirect("/" + userId + "/events/" + eventId);
-    
+    let cb = (err, result) => res.redirect("/events/" + eventId);
 
     if (action === "new scene")
         model.addScene(userId, eventId, cb);
@@ -187,7 +184,7 @@ app.post("/:userId/events/:eventId", ensureAuthenticated, (req, res) => {
             
         else 
             newSubject = {
-                name: req.body.name,
+                name: req.body.name === "" ? "?" : req.body.name,
                 gender: req.body.gender
             }
         
