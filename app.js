@@ -42,7 +42,13 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
       //console.log("Profile:", profile);
-      return model.getUserId(profile.provider, profile.id, done);
+      return model.getUserId(profile.provider, profile.id, (err, userId) => {
+          let userInfo = {
+              id: userId,
+              name: profile.displayName
+          }
+          return done(err, userInfo);
+      });
     //return done(null, profile);
   }
 ));
@@ -73,24 +79,13 @@ passport.deserializeUser(function(user, done) {
 app.get('/', function (req, res) {
     
     let renderData = {};
-    renderData.userId = (req.isAuthenticated() ? req.user : "n/a");
-    res.render("index", renderData);
-    /*
-  var html = "<ul>\
-    <li><a href='/auth/facebook'>Facebook</a></li>\
-    <li><a href='/logout'>logout</a></li>\
-    <li><a href='/events'>events</a></li>\
-  </ul>";
-    
-    // dump the user for debugging
     if (req.isAuthenticated()) {
-      html += "<p>authenticated as user:</p>"
-      html += "<pre>" + JSON.stringify(req.user, null, 4) + "</pre>";
+        renderData.userId = req.user.id;
+        renderData.name = req.user.name;
     }
+    
+    res.render("index", renderData);
 
-
-  res.send(html);
-  */
 });
 
 
@@ -137,11 +132,11 @@ app.get('/protected', ensureAuthenticated, function(req, res) {
 
 
 /* Show the user's events when provided a user ID */
-app.get("/events", ensureAuthenticated, (req, res) => model.getEvents(req.user, (err, events) => {
+app.get("/events", ensureAuthenticated, (req, res) => model.getEvents(req.user.id, (err, events) => {
     if (err) 
         console.error(err);
 
-    res.render("events", {userId: req.user, events: events});
+    res.render("events", {userId: req.user.id, name: req.user.name, events: events});
     
 }));
 
@@ -149,7 +144,7 @@ app.get("/events", ensureAuthenticated, (req, res) => model.getEvents(req.user, 
 app.post("/events", ensureAuthenticated, (req, res) => {
     let newDate = new Date();
     model.addEvent(
-        req.user,
+        req.user.id,
         req.body.eventName,
         newDate.toString(),
         (err, id) => {
@@ -162,19 +157,22 @@ app.post("/events", ensureAuthenticated, (req, res) => {
 /* Show the event details when provided a user ID and event ID */
 app.get("/events/:eventId", ensureAuthenticated, (req, res) => {
     
-    model.getEventDetails(req.user, req.params.eventId, (err, details) => {
+    model.getEventDetails(req.user.id, req.params.eventId, (err, details) => {
         if (err)
             console.error(err)
 
         details["scenes_detailed"] = helpers.sceneDetails(details.subjects, details.scenes);
-        res.render("event-details", {details: details});
+        res.render("event-details", {
+            userId: req.user.id,
+            name: req.user.name,
+            details: details});
     });
 });
 
 
 app.post("/events/:eventId", ensureAuthenticated, (req, res) => {
     let action = req.body.action;
-    let userId = req.user;
+    let userId = req.user.id;
     let eventId = req.params.eventId;
     let cb = (err, result) => res.redirect("/events/" + eventId);
 

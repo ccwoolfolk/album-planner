@@ -1,20 +1,14 @@
 html
 
     head
-        title= "Album Planner (" + userId + ")"
+        if name
+            title= "Album Planner (" + name + ")"
+        if !name
+            title Album Planner
         include header
         link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
 
     body
-        nav.navbar.navbar-light.bg-faded
-            form.form-inline.float-xs-left
-                button.btn.btn-outline-secondary(type="button")
-                    a(href="/auth/facebook")
-                        i.fa.fa-facebook-square
-                        span Login with Facebook
-                button.btn.btn-outline-secondary(type="button")
-                    a(href="/logout") Sign Out
-                button.btn.btn-outline-secondary(type="button")
-                    a(href="/events") Events
+        include navbar
         
         h1 Album Planner
