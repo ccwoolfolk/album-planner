@@ -1,4 +1,25 @@
 .events {
-    background-color: rgb(229,229,229);
     border-radius: 5px;
+    padding: 10px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #404040;
 }
+
+#add-new-event {
+    border-style: none;
+}
+
+.events .view-button {
+    color: #FCFCFC;
+    background-color: #FF723D;
+    border-color: #FF723D;
+    border-radius: 5px;
+    border-style: solid;
+}
+
+.events h3 {
+    color: #009C79;
+    
+}
+
