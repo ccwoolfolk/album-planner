@@ -22,7 +22,7 @@ html
                     div#name-container
                         h1= details.name
                             i.fa.fa-pencil-square-o(id="btn-edit-name")
-                        p= details.date
+                        p= [(new Date(details.date)).getMonth() + 1, (new Date(details.date)).getDate(), (new Date(details.date)).getFullYear()].join("-")
             div.row
                 
                 each scene, index in details.scenes_detailed

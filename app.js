@@ -146,7 +146,7 @@ app.post("/events", ensureAuthenticated, (req, res) => {
     model.addEvent(
         req.user.id,
         req.body.eventName,
-        newDate.toString(),
+        newDate.valueOf(),
         (err, id) => {
             if (err)
                 console.error(err);

@@ -10,7 +10,7 @@ exports.data = {
                     {
                         "event_id": 1,
                         "name": "birthday party",
-                        "date": (new Date("October 7, 2016")).toString(),
+                        "date": (new Date("October 7, 2016")).valueOf(),
                         "subjects": [
                             {   "subject_id": 1,
                                 "name": "oscar",
@@ -28,7 +28,7 @@ exports.data = {
                     }, {
                         "event_id": 3,
                         "name": "second event",
-                        "date": (new Date("October 7, 2016")).toString(),
+                        "date": (new Date("October 7, 2016")).valueOf(),
                         "subjects": [],
                         "scenes": []
                     }

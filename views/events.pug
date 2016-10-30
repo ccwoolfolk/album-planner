@@ -13,7 +13,7 @@ html
                     div(class="col-sm-3 col-xs-12")
                         div.events
                             h3= ev.name
-                            p= ev.date
+                            p= [(new Date(ev.date)).getMonth() + 1, (new Date(ev.date)).getDate(), (new Date(ev.date)).getFullYear()].join("-")
                             a(href="/events/" + ev.event_id)
                                 button.view-button View It
                     
@@ -21,6 +21,7 @@ html
                     div.events#add-new-event
                         h3 Add new event
                         div(class="input-group")
+                            
                             input(id="new-event-name" type="text" class="form-control" placeholder="Event name")
                             span(class="input-group-btn")
                                 button(id="submit-new-event" class="btn btn-default" type="button") Add!
