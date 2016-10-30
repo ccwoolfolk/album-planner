@@ -1,3 +1,12 @@
+body {
+    background-color: #FCFCFC;
+    color: #404040;
+}
+
+h1, h2, h3 {
+    color: #009C79;
+}
+
 #name-edit-container {
     display: none;
 }
@@ -8,10 +17,25 @@
     font-size: smaller;
 }
 
+#new-scene {
+    border-style: none;
+}
+
+#new-scene h3 {
+    margin-top: 0px;
+}
+
 .scenes {
-    background-color: rgb(229,229,229);
+    padding: 10px;
     border-radius: 5px;
     font-size: larger;
+    border-width: thin;
+    border-style: solid;
+    border-color: #404040;
+}
+
+.scenes li:hover {
+    background-color: rgb(230,230,230);
 }
 
 .fa-male {
@@ -22,16 +46,29 @@
     color: rgb(227,125,163);
 }
 
+.dropdown-toggle {
+    min-height: 28px;
+}
+
 .dropdown-menu li:hover {
     cursor: pointer;
     background-color: rgb(209,204,255);
 }
 
 .remove-subject {
+    color: #FF723D;
     cursor: pointer;
     float: right;
     margin-right: 10px;
-    background-color: white;
     border-radius: 3px;
     padding: 1px;
+}
+
+.back-button {
+    margin-top: 15px;
+    background-color: #FF723D;
+    color: #FCFCFC;
+    border-color: #FF723D;
+    border-style: solid;
+    border-radius: 5px;
 }
