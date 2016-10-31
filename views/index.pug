@@ -7,8 +7,32 @@ html
             title Album Planner
         include header
         link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+        link(rel="stylesheet", href="/css/index.css", type='text/css' )
 
     body
         include navbar
-        
-        h1 Album Planner
+        div.container
+            div.row#section-1
+                div.col-sm-3
+                div.col-sm-6.col-xs-12.text-center
+                    div.text-box
+                        h1 Album Planner
+                        p Never miss a shot again
+                    a(href="/auth/facebook")
+                        button#try-button
+                            h3 Try It Now
+                        
+                div.col-sm-3
+            div.row
+                div.col-xs-12.text-center
+                    h2 Features
+            div.row
+                div.col-sm-4.col-xs-12
+                    h3.text-center Free
+                    p Use Album Planner with your clients, free of charge. No gimmicks. No cost.
+                div.col-sm-4.col-xs-12
+                    h3.text-center Simple
+                    p Simple interface designed with mobile in mind. Use your facebook account to sign in. No username/password combination to forget.
+                div.col-sm-4.col-xs-12
+                    h3.text-center Effective
+                    p No more guesswork or interpreting scribbled notes. Each planned shot is shown with a list of subjects.

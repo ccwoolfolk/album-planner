@@ -1,0 +1,42 @@
+body {
+    font-family: Abel;
+}
+
+h1, h2, h3, h4 {
+    font-family: Quicksand;
+}
+
+p {
+    font-size: larger;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}
+
+#section-1 {
+    min-height: 500px;
+    background-image: url(../images/camera-table-wooden-small.jpg);
+    background-size: cover;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#try-button {
+    margin-top: 25px;
+    padding: 5px 50px;
+    background-color: #FF723D;
+    color: #FCFCFC;
+    border-color: #FF723D;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.text-box {
+    background-color: #009C79;
+    color: #FCFCFC;
+    border-radius: 10px;
+    padding: 20px;
+}
