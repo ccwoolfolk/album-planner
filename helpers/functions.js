@@ -1,6 +1,18 @@
 "use strict";
 
-exports.sceneDetails = function(subjects, scenes) {
+/**
+ * Convert an array of subject IDs to an array of subject objects
+ * @param {Object[]} subjects - Array of subject objects
+ * @param {string} subjects[].subject_id - Subject ID
+ * @param {string} subjects[].name - Name of subject
+ * @param {string} subjects[].gender - Gender of subject
+ * 
+ * @param {Object[]} scenes - Array of scene objects
+ * @param {string[]} scenes[].subjects - Array of subject IDs
+ * 
+ * @returns {Object[][]} Array for each scene containing an array of objects with name and gender
+ */
+function sceneDetails(subjects, scenes) {
 
     // Convert a scene object to an array of subjects
     let convertIds = (idArray) => {
@@ -18,6 +30,8 @@ exports.sceneDetails = function(subjects, scenes) {
 
     return scenes.map(convertIds);
 }
+
+exports.sceneDetails = sceneDetails;
 
 exports.findEventIndex = function(eventId, events) {
     for (let i = 0; i < events.length; i++) {

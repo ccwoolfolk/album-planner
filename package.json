@@ -15,6 +15,7 @@
     "socket.io": "^0.9.17"
   },
   "devDependencies": {
+    "jsdoc": "^3.4.2",
     "mocha": "^3.1.0",
     "nodemon": "^1.11.0",
     "should": "^11.1.0"
