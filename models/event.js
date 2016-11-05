@@ -1,4 +1,5 @@
 "use strict";
+/** @module models/event */
 
 // Thanks to https://www.terlici.com/2014/09/15/node-testing.html
 
@@ -7,9 +8,18 @@ const helpers = require(process.env.GOPATH + '/helpers/functions.js');
 
 const COLLECTION = 'users';
 
-// User object for adding new users
-// 'params' object has user_name, provider, login_id keys
-let User = function(params) {
+/**
+ * User object for adding new users
+ * 
+ * @constructor
+ * @param {Object} params
+ * @param {string} params.user_name - User display name; "Bobby Tables"
+ * @param {string} params.provider - Authorization provider; e.g., "facebook"
+ * @param {string} login_id - ID provided by authorization provider
+ * 
+ * @returns {Object} User object
+ */
+let User = exports.User = function(params) {
     ["user_name", "provider", "login_id"].forEach((val) => {
         if (!params.hasOwnProperty(val))
             throw new Error("User object lacks '" + val + "' key");
@@ -21,11 +31,16 @@ let User = function(params) {
         "login_id": params.login_id,
         "events": []
     }
-}
+};
 
-exports.User = User;
-
-let addUser = function(newUser, cb) {
+/**
+ * Add user to the database
+ * 
+ * @param {Object} newUser - Object of class @see module:models/event~User
+ * @param {function} cb
+ * 
+ */
+exports.addUser = function(newUser, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({},{_id: 0, user_id: 1}).toArray(function(err, results) {
         if (err) {
@@ -37,10 +52,17 @@ let addUser = function(newUser, cb) {
         newUser.user_id = (Math.max.apply(null, idArr) + 1).toString();
         db.collection(COLLECTION).insert(newUser, cb);
     });
-}
+};
 
-exports.addUser = addUser;
+let addUser = exports.AddUser;
 
+/**
+ * Get all users in one object
+ * 
+ * @param {function} cb
+ * @returns cb(err, string_results)
+ * 
+ */
 // Get all users
 exports.all = function(cb) {
   let db = DB.getDB();
