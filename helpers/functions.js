@@ -1,7 +1,13 @@
 "use strict";
 
 /**
+ * Helper functions
+ * @module helpers/functions
+ */
+
+/**
  * Convert an array of subject IDs to an array of subject objects
+ *
  * @param {Object[]} subjects - Array of subject objects
  * @param {string} subjects[].subject_id - Subject ID
  * @param {string} subjects[].name - Name of subject
@@ -11,8 +17,9 @@
  * @param {string[]} scenes[].subjects - Array of subject IDs
  * 
  * @returns {Object[][]} Array for each scene containing an array of objects with name and gender
+ * 
  */
-function sceneDetails(subjects, scenes) {
+exports.sceneDetails = function(subjects, scenes) {
 
     // Convert a scene object to an array of subjects
     let convertIds = (idArray) => {
@@ -31,8 +38,15 @@ function sceneDetails(subjects, scenes) {
     return scenes.map(convertIds);
 }
 
-exports.sceneDetails = sceneDetails;
-
+/**
+ * Find a specific event within an event array
+ * 
+ * @param {string} eventId
+ * @param {Object[]} Array of event objects with event_id keys
+ * @param {string} events[].event_id
+ * @returns {integer} Zero-based index
+ * 
+ */
 exports.findEventIndex = function(eventId, events) {
     for (let i = 0; i < events.length; i++) {
         if (events[i]["event_id"] == eventId)
@@ -43,6 +57,17 @@ exports.findEventIndex = function(eventId, events) {
 }
 
 
+/**
+ * Check if a subject_id is already present in an array of subjects
+ * 
+ * @param {Object} subject
+ * @param {string} subject.subject_id
+ * @param {Object[]} existingSubjects
+ * @param {string} existingSubjects[].subject_id
+ * 
+ * @returns {boolean}
+ * 
+ */
 exports.subjectIsNew = function(subject, existingSubjects) {
     let existingIds = existingSubjects.map((val) => { return val["subject_id"] });
     return existingIds.indexOf(subject["subject_id"]) === -1;
