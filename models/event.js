@@ -40,7 +40,7 @@ let User = exports.User = function(params) {
  * @param {function} cb
  * 
  */
-exports.addUser = function(newUser, cb) {
+let addUser = exports.addUser = function(newUser, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({},{_id: 0, user_id: 1}).toArray(function(err, results) {
         if (err) {
@@ -54,7 +54,6 @@ exports.addUser = function(newUser, cb) {
     });
 };
 
-let addUser = exports.AddUser;
 
 /**
  * Get all users in one object
