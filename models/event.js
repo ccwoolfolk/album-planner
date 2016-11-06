@@ -64,28 +64,45 @@ exports.addUser = function(newUser, cb) {
  * @returns cb(err, string_results)
  * 
  */
-// Get all users
 exports.all = function(cb) {
   let db = DB.getDB();
   db.collection(COLLECTION).find({}).toArray((err, results) => {
     cb(err, results)
   });
-}
+};
 
-// Get all events for a given user
-let getEvents = function(user_id, cb) {
+
+let getEvents =
+/**
+ * Get all events for a given user
+ * 
+ * @param {string} user_id - User ID
+ * @param {function} cb - Callback function
+ * 
+ * @returns Calls callback with (err, events) where events is an array of events
+ * 
+ */
+exports.getEvents = function(user_id, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({"user_id": user_id}).toArray(function(err, results) {
         if (err) return cb(err);
         let events = results.length === 0 ? [] : results[0].events;
         cb(err, events);
     });
-}
-
-exports.getEvents = getEvents;
+};
 
 
-// Take user_id, name, date
+/**
+ * Add event to a given user profile
+ * 
+ * @param {string} userId - User ID
+ * @param {string} eventName - Event display name
+ * @param {string} eventDate - Event display date
+ * @param {function} cb - Callback function
+ * 
+ * @returns Calls callback with (err, results) where results is output of update
+ * 
+ */
 exports.addEvent = function(userId, eventName, eventDate, cb) {
     let db = DB.getDB();
     getEvents(userId, function(err, allEvents) {
@@ -111,6 +128,17 @@ exports.addEvent = function(userId, eventName, eventDate, cb) {
     });
 };
 
+
+/**
+ * Remove an event from a given user profile
+ * 
+ * @param {string} userId - User ID
+ * @param {integer} eventId - Event ID
+ * @param {function} cb - Callback function
+ * 
+ * @returns Calls callback function (err, results) with results from update
+ * 
+ */
 exports.removeEvent = function(userId, eventId, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).update(
