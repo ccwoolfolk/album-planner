@@ -61,9 +61,9 @@ describe('Model Event Tests', function() {
             
             Album.all(function(err, users) {
                 assert.equal(users.length, 2);
-                assert.equal(users[0].user_name, "Alf");
-                assert(users[0].hasOwnProperty("user_id"));
-                assert(users[0].user_id, "2");
+                assert.equal(users[1].user_name, "Alf");
+                assert(users[1].hasOwnProperty("user_id"));
+                assert(users[1].user_id, "2");
                 done();
             });
         });
