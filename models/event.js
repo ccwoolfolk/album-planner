@@ -33,6 +33,8 @@ let User = exports.User = function(params) {
     }
 };
 
+
+let addUser =
 /**
  * Add user to the database
  * 
@@ -40,7 +42,7 @@ let User = exports.User = function(params) {
  * @param {function} cb
  * 
  */
-let addUser = exports.addUser = function(newUser, cb) {
+exports.addUser = function(newUser, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({},{_id: 0, user_id: 1}).toArray(function(err, results) {
         if (err) {
