@@ -149,7 +149,19 @@ exports.removeEvent = function(userId, eventId, cb) {
         (err, res) => cb(err, res));
 }
 
-let getEventDetails = function(userId, eventId, cb) {
+
+let getEventDetails =
+/**
+ * Find a single event object and pass to the callback function
+ * 
+ * @param {string} userId - User ID
+ * @param {string} eventId - Event ID
+ * @param {function} cb - Callback function that takes (error, eventObject)
+ * 
+ * @returns Calls callback function
+ * 
+ */
+exports.getEventDetails = function(userId, eventId, cb) {
     let db = DB.getDB();
     db.collection(COLLECTION).find({
         "user_id": userId,
@@ -169,10 +181,19 @@ let getEventDetails = function(userId, eventId, cb) {
         let output = results[0].events[0];
         cb(err, output);
     })
-}
+};
 
-exports.getEventDetails = getEventDetails;
 
+/**
+ * Add an empty scene to an event
+ * 
+ * @param {string} userId - User ID
+ * @param {string} eventId - Event ID
+ * @param {function} cb - Callback function
+ * 
+ * @returns Calls callback function with (err, results) from update
+ * 
+ */
 exports.addScene = function(userId, eventId, cb) {
     let db = DB.getDB();
 
@@ -187,8 +208,21 @@ exports.addScene = function(userId, eventId, cb) {
             {$push: updateQuery},
         (err, res) => cb(err,res));    
     });
-}
+};
 
+
+/**
+ * Remove subject from a scene
+ * 
+ * @param {string} userId - User ID
+ * @param {string} eventId - Event ID
+ * @param {integer} sceneIdx - Scene index within scene array
+ * @param {integer} subjectIdx - Subject index within subject array
+ * @param {function} cb - Callback function
+ * 
+ * @returns Calls callback with (err, results) from update
+ * 
+ */
 exports.removeSubject = function(userId, eventId, sceneIdx, subjectIdx, cb) {
     let db = DB.getDB();
     sceneIdx = parseInt(sceneIdx);
@@ -207,9 +241,20 @@ exports.removeSubject = function(userId, eventId, sceneIdx, subjectIdx, cb) {
             (err, res) => cb(err, res)  );
             
     });
-}
+};
 
 
+/**
+ * Updates event name
+ * 
+ * @param {string} newName - New name to change to
+ * @param {string} userId - User ID
+ * @param {string} eventId - Event ID
+ * @param {function} cb - Callback function
+ * 
+ * @returns Calls callback with (err, results) from update
+ * 
+ */
 exports.updateEventName = function(newName, userId, eventId, cb) {
     let db = DB.getDB();
     
@@ -223,9 +268,21 @@ exports.updateEventName = function(newName, userId, eventId, cb) {
             {$set: updateQuery},
             (err, res) => cb(err, res)  );
     });
-}
+};
 
 
+/**
+ * Add subject to a scene
+ * 
+ * @param {string} userId - User ID
+ * @param {string} eventId - Event ID
+ * @param {integer} sceneIdx - Scene index within scene array
+ * @param {Object} newSubject - Subject to add
+ * @param {function} cb - Callback function
+ * 
+ * @returns Null if subject is already in scene. Else, calls callback function
+ * 
+ */
 exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
     let db = DB.getDB();
     sceneIdx = parseInt(sceneIdx);
@@ -264,9 +321,21 @@ exports.addSubject = function(userId, eventId, sceneIdx, newSubject, cb) {
                 } else cb(err, res);
             });
     });
-}
+};
 
-let getUserId = function(provider, loginId, cb) {
+
+let getUserId =
+/**
+ * Retrieve user ID during login
+ * 
+ * @param {string} provider - E.g. 'facebook'
+ * @param {string} loginId - Login ID from authentication provider
+ * @param {function} cb - Callback function
+ * 
+ * @returns cb(error, user ID); adds user if not present in database
+ * 
+ */
+exports.getUserId = function(provider, loginId, cb) {
     let db = DB.getDB();
     
     db.collection(COLLECTION).find({
@@ -291,6 +360,4 @@ let getUserId = function(provider, loginId, cb) {
             
         cb(err, results[0]["user_id"]);
     });
-}
-
-exports.getUserId = getUserId;
+};
