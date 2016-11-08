@@ -1,1 +1,1 @@
-./node_modules/jsdoc/jsdoc.js -r helpers/ models/
+./node_modules/jsdoc/jsdoc.js -r helpers/ models/ controllers/

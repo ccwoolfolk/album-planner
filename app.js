@@ -7,6 +7,7 @@ const passport = require("passport");
 
 const model = require("./models/event.js");
 const helpers = require(process.env.GOPATH + '/helpers/functions.js');
+const route = require("./controllers/routes.js");
 
 const fixtures = require('./test/fixtures/model-albums').data;
 
@@ -76,17 +77,7 @@ passport.deserializeUser(function(user, done) {
 
 
 // main menu route
-app.get('/', function (req, res) {
-    
-    let renderData = {};
-    if (req.isAuthenticated()) {
-        renderData.userId = req.user.id;
-        renderData.name = req.user.name;
-    }
-    
-    res.render("index", renderData);
-
-});
+app.get('/', route.home);
 
 
 app.get('/logout', function(req, res){
