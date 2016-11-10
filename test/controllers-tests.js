@@ -1,18 +1,48 @@
 "use strict";
 
+let DB = require('../db')
+  , fixtures = require(process.env.GOPATH + '/test/fixtures/model-albums').data;
 let assert = require("assert");
 const route = require(process.env.GOPATH + '/controllers/routes.js');
 
+
+let createReq = function(auth) {
+    return {
+        isAuthenticated: () => auth,
+        user: {
+            id: "1",
+            name: "Test Person"
+        }
+    }
+};
+
+
+
+
+
 describe("Route tests", function() {
-   it("home() with authentication", function(done) {
+
+    before(function(done) {
+        DB.connect(DB.MODE_TEST, done);
+        
+    });
+
+    beforeEach(function(done) {
+        DB.drop(function(err) {
+            if (err)
+                return done(err);
+                
+            DB.fixtures(fixtures, done)
+        });
+        
+        
+    });
+
+
+
+   it("home()", function(done) {
        
-       let req = {
-           isAuthenticated: () => true,
-           user: {
-               id: "1234",
-               name: "Test Person"
-           }
-       };
+       let req = createReq(true);
        
        // With authentication
        let renderResults = {
@@ -29,7 +59,7 @@ describe("Route tests", function() {
        assert.equal(renderResults.name, req.user.name);
        
        // Without authentication
-       req.isAuthenticated = () => false;
+       req = createReq(false);
        renderResults = {
            userId: "",
            name: ""
@@ -40,5 +70,25 @@ describe("Route tests", function() {
        assert.equal(renderResults.name, undefined);
        
        done();
+   });
+   
+   it("events()", function(done) {
+       let req = createReq(true)
+       
+       let renderResults = {};
+       
+       let res = {
+           render: (fileName, data) => { 
+               
+               assert.equal(fileName, "events");
+               assert.equal(data.userId, "1");
+               assert.equal(data.name, "Test Person");
+               assert.equal(data.events.length, 2);
+               done();
+           }
+       };
+       
+       route.events(req, res)
+       
    });
 });

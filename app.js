@@ -117,19 +117,8 @@ app.get('/protected', ensureAuthenticated, function(req, res) {
 
 
 
-
-
-
-
-
 /* Show the user's events when provided a user ID */
-app.get("/events", ensureAuthenticated, (req, res) => model.getEvents(req.user.id, (err, events) => {
-    if (err) 
-        console.error(err);
-
-    res.render("events", {userId: req.user.id, name: req.user.name, events: events});
-    
-}));
+app.get("/events", ensureAuthenticated, route.events);
 
 /* Add a new event */
 app.post("/events", ensureAuthenticated, (req, res) => {
