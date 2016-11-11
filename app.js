@@ -76,15 +76,11 @@ passport.deserializeUser(function(user, done) {
 
 
 
-// main menu route
-app.get('/', route.home);
+
+app.get('/', route.getHome);
+app.get('/logout', route.getLogout);
 
 
-app.get('/logout', function(req, res){
-  console.log('logging out');
-  req.logout();
-  res.redirect('/');
-});
 
 // we will call this to start the Facebook Login process
 app.get('/auth/facebook', passport.authenticate('facebook'));
@@ -118,7 +114,7 @@ app.get('/protected', ensureAuthenticated, function(req, res) {
 
 
 /* Show the user's events when provided a user ID */
-app.get("/events", ensureAuthenticated, route.events);
+app.get("/events", ensureAuthenticated, route.getEvents);
 
 /* Add a new event */
 app.post("/events", ensureAuthenticated, (req, res) => {

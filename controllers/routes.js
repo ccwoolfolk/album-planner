@@ -49,3 +49,17 @@ exports.getEvents = function(req, res) {
         res.render("events", {userId: req.user.id, name: req.user.name, events: events});
     });
 };
+
+/**
+ * Log out a user and redirect home
+ * 
+ * @param {Object} req
+ * @param {function} req.logout
+ * @param {Object} res
+ * 
+ */
+exports.getLogout = function(req, res) {
+    console.log('logging out user ID "' + req.user.id + '"');
+    req.logout();
+    res.redirect('/');
+};

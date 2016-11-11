@@ -91,4 +91,6 @@ describe("Route tests", function() {
        route.getEvents(req, res)
        
    });
+   
+   it("getLogout()");
 });
