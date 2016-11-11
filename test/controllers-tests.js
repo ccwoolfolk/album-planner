@@ -40,7 +40,7 @@ describe("Route tests", function() {
 
 
 
-   it("home()", function(done) {
+   it("getHome()", function(done) {
        
        let req = createReq(true);
        
@@ -54,7 +54,7 @@ describe("Route tests", function() {
            render: (fileName, data) => { renderResults = data }
        };
        
-       route.home(req, res)
+       route.getHome(req, res)
        assert.equal(renderResults.userId, req.user.id);
        assert.equal(renderResults.name, req.user.name);
        
@@ -65,14 +65,14 @@ describe("Route tests", function() {
            name: ""
        };
        
-       route.home(req, res);
+       route.getHome(req, res);
        assert.equal(renderResults.userId, undefined);
        assert.equal(renderResults.name, undefined);
        
        done();
    });
    
-   it("events()", function(done) {
+   it("getEvents()", function(done) {
        let req = createReq(true)
        
        let renderResults = {};
@@ -88,7 +88,7 @@ describe("Route tests", function() {
            }
        };
        
-       route.events(req, res)
+       route.getEvents(req, res)
        
    });
 });

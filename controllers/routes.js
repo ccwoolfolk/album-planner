@@ -4,6 +4,9 @@
 
 const model = require("../models/event.js");
 
+exports.home = {};
+exports.events = {};
+
 /**
  * Render the homepage
  * 
@@ -15,7 +18,7 @@ const model = require("../models/event.js");
  * @param {Object} res
  * 
  */
-exports.home = function (req, res) {
+exports.getHome = function (req, res) {
     
     let renderData = {};
     if (req.isAuthenticated()) {
@@ -38,7 +41,7 @@ exports.home = function (req, res) {
  * @param {Object} res
  * 
  */
-exports.events = function(req, res) {
+exports.getEvents = function(req, res) {
     model.getEvents(req.user.id, function(err, events) {
         if (err)
             console.error(err);
