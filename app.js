@@ -107,80 +107,22 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/')
 }
 
-app.get('/protected', ensureAuthenticated, function(req, res) {
-  res.json(req);
-});
-
-
 
 /* Show the user's events when provided a user ID */
 app.get("/events", ensureAuthenticated, route.getEvents);
 
 /* Add a new event */
-app.post("/events", ensureAuthenticated, (req, res) => {
-    let newDate = new Date();
-    model.addEvent(
-        req.user.id,
-        req.body.eventName,
-        newDate.valueOf(),
-        (err, id) => {
-            if (err)
-                console.error(err);
-            res.redirect("/events");
-        });
-});
+app.post("/events", ensureAuthenticated, route.postEvents);
 
 /* Show the event details when provided a user ID and event ID */
-app.get("/events/:eventId", ensureAuthenticated, (req, res) => {
-    
-    model.getEventDetails(req.user.id, req.params.eventId, (err, details) => {
-        if (err)
-            console.error(err)
+app.get("/events/:eventId", ensureAuthenticated, route.getEventDetails);
 
-        details["scenes_detailed"] = helpers.sceneDetails(details.subjects, details.scenes);
-        res.render("event-details", {
-            userId: req.user.id,
-            name: req.user.name,
-            details: details});
+
+app.post("/events/:eventId", ensureAuthenticated, route.postNewScene, 
+    route.postAddSubject, route.postRemoveSubject, route.postUpdateEventName,
+    (req, res) => {
+        res.redirect("/events/" + req.params.eventId);
     });
-});
-
-
-app.post("/events/:eventId", ensureAuthenticated, (req, res) => {
-    let action = req.body.action;
-    let userId = req.user.id;
-    let eventId = req.params.eventId;
-    let cb = (err, result) => res.redirect("/events/" + eventId);
-
-    if (action === "new scene")
-        model.addScene(userId, eventId, cb);
-
-    else if (action === "new subject") {
-        let subjectIdx = req.body.subjectIdx;
-        let newSubject = {};
-        
-        if (subjectIdx !== undefined)
-            newSubject.subjectIdx = subjectIdx;
-            
-        else 
-            newSubject = {
-                name: req.body.name === "" ? "?" : req.body.name,
-                gender: req.body.gender
-            }
-        
-        model.addSubject(userId, eventId, req.body.sceneIdx, newSubject, cb);
-
-    } else if (action == "remove subject") {
-        
-        let sceneIdx = req.body.sceneIdx;
-        let subjectIdx = req.body.subjectIdx;
-        
-        model.removeSubject(userId, eventId, sceneIdx, subjectIdx, cb);        
-    } else if (action == "edit name") {
-        model.updateEventName(req.body.name, userId, eventId, cb);
-    }
-    
-});
     
 
 /* testing only */

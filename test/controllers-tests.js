@@ -92,5 +92,11 @@ describe("Route tests", function() {
        
    });
    
+   it("postEvents()");
+   it("getEventDetails()");
+   it("postNewScene()");
+   it("postAddSubject()");
+   it("postRemoveSubject()");
+   it("postUpdateEventName()");
    it("getLogout()");
 });
