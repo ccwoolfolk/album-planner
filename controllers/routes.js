@@ -199,3 +199,30 @@ exports.postUpdateEventName = function(req, res, next) {
     next();
     
 };
+
+
+/**
+ * Render contact page
+ * 
+ */
+exports.getContact = function(req, res) {
+    res.render("contact");
+};
+
+
+/**
+ * Post a message to the contact form
+ * 
+ */
+exports.postContact = function(req, res) {
+    if (req.body.message === "" || !req.body.email.match(/[a-z0-9]+@.+\./gi)) {
+        res.statusCode = 500;
+        res.send();
+    } else {
+        console.log("Name:", req.body.name);
+        console.log("Email:", req.body.email);
+        console.log("Message:", req.body.message);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({result: "Success!"}));
+    }
+};

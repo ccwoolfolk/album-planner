@@ -99,4 +99,6 @@ describe("Route tests", function() {
    it("postRemoveSubject()");
    it("postUpdateEventName()");
    it("getLogout()");
+   it("getContact()");
+   it("postContact()");
 });

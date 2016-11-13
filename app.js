@@ -81,6 +81,9 @@ app.get('/', route.getHome);
 app.get('/logout', route.getLogout);
 
 
+app.get("/contact", route.getContact);
+app.post("/contact", route.postContact);
+
 
 // we will call this to start the Facebook Login process
 app.get('/auth/facebook', passport.authenticate('facebook'));

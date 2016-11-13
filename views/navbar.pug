@@ -2,23 +2,25 @@ nav.navbar.navbar-default
     div.container-fluid
 
         ul.nav.navbar-nav
-            if !userId
+            li
+                a(href="/") Home
+
+            li
+                a(href="/contact") Contact
+
+            if userId
+                li
+                    a(href="/events") Events
+        
+        ul.nav.navbar-nav.navbar-right
+            if userId
+                li
+                    p.navbar-text= "Logged in as " + name
+                li
+                    a(href="/logout") Sign Out
+            else
                 li
                     p.navbar-text
                         a(href="/auth/facebook")
                             i.fa.fa-facebook-square
                             span   Login with Facebook
-
-            if userId
-                li
-                    a(href="/") Home
-                li
-                    a(href="/events") Events
-        
-        if userId
-            ul.nav.navbar-nav.navbar-right
-                
-                li
-                    p.navbar-text= "Logged in as " + name
-                li
-                    a(href="/logout") Sign Out
