@@ -1,5 +1,11 @@
 "use strict";
 
+/* Arguments to 'node app.js' should be gmail account, password */
+process.argv.map((val) => console.log(val));
+if (process.argv.length < 4)
+    throw(new Error("Specify email credentials for contact form use"));
+const emailCredentials = [process.argv[2], process.argv[3]];
+
 const express = require("express");
 const pug = require("pug");
 const bodyParser = require("body-parser");
@@ -82,7 +88,7 @@ app.get('/logout', route.getLogout);
 
 
 app.get("/contact", route.getContact);
-app.post("/contact", route.postContact);
+app.post("/contact", route.createPostContact(emailCredentials));
 
 
 // we will call this to start the Facebook Login process

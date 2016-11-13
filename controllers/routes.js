@@ -2,6 +2,8 @@
 
 /** @module controllers/routes */
 
+const nodemailer = require("nodemailer");
+
 const helpers = require(process.env.GOPATH + '/helpers/functions.js');
 const model = require("../models/event.js");
 
@@ -211,18 +213,51 @@ exports.getContact = function(req, res) {
 
 
 /**
- * Post a message to the contact form
+ * Return a function that sends a contact form message
+ * 
+ * @param {string[]} emailCredentials
+ * @param {string} emailCredentials[0] - gmail account name
+ * @param {string} emailCredentials[1] - gmail account password
+ * 
+ * @returns {function} Routing function for POST operations on contact page
  * 
  */
-exports.postContact = function(req, res) {
-    if (req.body.message === "" || !req.body.email.match(/[a-z0-9]+@.+\./gi)) {
-        res.statusCode = 500;
-        res.send();
-    } else {
-        console.log("Name:", req.body.name);
-        console.log("Email:", req.body.email);
-        console.log("Message:", req.body.message);
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({result: "Success!"}));
+exports.createPostContact = function(emailCredentials) {
+    let transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+            user: emailCredentials[0] + "@gmail.com",
+            pass: emailCredentials[1]
+        }
+    });
+    
+    return function(req, res) {
+        if (req.body.message === "" || !req.body.email.match(/[a-z0-9]+@.+\./gi)) {
+            res.statusCode = 500;
+            res.send();
+        } else {
+            let mailOptions = {
+                from: "contact-form@album-planner.com",
+                to: "ccwoolfolk@gmail.com",
+                subject: "Album Planner Contact Form",
+                text: JSON.stringify({
+                    name: req.body.name,
+                    email: req.body.email,
+                    message: req.body.message
+                })
+            };
+            
+            transporter.sendMail(mailOptions, function(err, info) {
+                if(err) {
+                    console.error(err);
+                    res.statusCode = 500;
+                    res.send();
+                } else {
+                    console.log('Message sent: ' + info.response);
+                    res.setHeader('Content-Type', 'application/json');
+                    res.send(JSON.stringify({result: "Success!"}));
+                };
+            });
+        }
     }
 };

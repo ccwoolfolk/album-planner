@@ -100,5 +100,5 @@ describe("Route tests", function() {
    it("postUpdateEventName()");
    it("getLogout()");
    it("getContact()");
-   it("postContact()");
+   it("createPostContact()");
 });
