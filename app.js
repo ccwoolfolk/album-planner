@@ -9,7 +9,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 
 const model = require("./models/event.js");
-const helpers = require(process.env.GOPATH + '/helpers/functions.js');
+const helpers = require('./helpers/functions.js');
 const route = require("./controllers/routes.js");
 
 const fixtures = require('./test/fixtures/model-albums').data;
