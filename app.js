@@ -1,10 +1,7 @@
 "use strict";
 
 /* Arguments to 'node app.js' should be gmail account, password */
-process.argv.map((val) => console.log(val));
-if (process.argv.length < 4)
-    throw(new Error("Specify email credentials for contact form use"));
-const emailCredentials = [process.argv[2], process.argv[3]];
+const emailCredentials = [process.argv[2] || process.env.EMAILADDRESS, process.argv[3] || process.env.EMAILAUTH];
 
 const express = require("express");
 const pug = require("pug");
@@ -145,5 +142,6 @@ app.get("/test/:id", (req, res) => model.all((err, events) => {
 
 
 DB.connect(DB.MODE_TEST, () => DB.drop(() => DB.fixtures(fixtures, () => {
-    app.listen(8080, () => console.log("listening on 8080") );
+    const port = process.env.PORT || 8080;
+    app.listen(port, () => console.log("listening on", port) );
 })));
