@@ -1,12 +1,9 @@
 html
     head
         title Contact Us
-        include header
-        
-        // link(rel="stylesheet", href="css/events.css", type='text/css' )
-        script(src="/js/contact.js", type='text/javascript' )
-        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous")
         link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+        include header
+        script(src="/js/contact.js", type='text/javascript' )
     body
         include navbar
         .container
@@ -27,11 +24,13 @@ html
                         textarea.form-control#inputMessage(rows="7")
 
                 .form-group.row
-                    .offset-sm-2.col-sm-10
+                    .col-sm-2
+                    .col-sm-10
                         button.btn.btn-primary#submit(type='button') Submit
                         
                 .form-group.row
-                    .offset-sm-2.col-sm-10
+                    .col-sm-2
+                    .col-sm-10
                         p#message
 
         
