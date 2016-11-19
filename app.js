@@ -143,5 +143,6 @@ app.get("/test/:id", (req, res) => model.all((err, events) => {
 
 DB.connect(DB.MODE_TEST, () => DB.drop(() => DB.fixtures(fixtures, () => {
     const port = process.env.PORT || 8080;
+    console.log("Added:", JSON.stringify(fixtures));
     app.listen(port, () => console.log("listening on", port) );
 })));

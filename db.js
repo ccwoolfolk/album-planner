@@ -23,7 +23,7 @@ exports.connect = function(mode, done) {
     let uri = mode === exports.MODE_TEST ? TEST_URI : PRODUCTION_URI;
     
     MongoClient.connect(uri, function(err, db) {
-        console.log("Connecting to the database at: ");
+        console.log("Connecting to the database at: ", uri);
         if (err)
             return done(err);
         state.db = db;
@@ -61,6 +61,7 @@ exports.fixtures = function(data, done) {
         return done(new Error('Missing database connection.'));
 
     let names = Object.keys(data.collections);
+    console.log("Adding these keys to DB:", names);
     
     async.each(names, function(name, cb) {
         db.createCollection(name, function(err, collection) {
