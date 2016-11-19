@@ -1,0 +1,17 @@
+form {
+    margin-top: 20px;
+}
+
+h1 {
+    color: #009C79;
+}
+
+#submit {
+    background-color: #FF723D;
+    color: #FCFCFC;
+    border-color: #FF723D;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-size: larger;
+}
