@@ -4,7 +4,7 @@
 // Thanks to https://www.terlici.com/2014/09/15/node-testing.html
 
 let DB = require('../db');
-const helpers = require(process.env.GOPATH + '/helpers/functions.js');
+const helpers = require('../helpers/functions.js');
 
 const COLLECTION = 'users';
 

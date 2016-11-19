@@ -4,7 +4,7 @@
 
 const nodemailer = require("nodemailer");
 
-const helpers = require(process.env.GOPATH + '/helpers/functions.js');
+const helpers = require('../helpers/functions.js');
 const model = require("../models/event.js");
 
 
