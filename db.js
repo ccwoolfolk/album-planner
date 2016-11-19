@@ -10,8 +10,8 @@ let state = {
     mode: null
 }
 
-const PRODUCTION_URI = process.env.MONGOLAB_URI || "mongodb://" + process.env.IP + ":" + "27017/production";
-const TEST_URI = process.env.MONGOLAB_URI || "mongodb://" + process.env.IP + ":" + "27017/test";
+const PRODUCTION_URI = process.env.MONGODB_URI || "mongodb://" + process.env.IP + ":" + "27017/production";
+const TEST_URI = process.env.MONGODB_URI || "mongodb://" + process.env.IP + ":" + "27017/test";
 
 exports.MODE_TEST = "mode_test";
 exports.MODE_PRODUCTION = "mode_production";
@@ -23,6 +23,7 @@ exports.connect = function(mode, done) {
     let uri = mode === exports.MODE_TEST ? TEST_URI : PRODUCTION_URI;
     
     MongoClient.connect(uri, function(err, db) {
+        console.log("Connecting to the database at: ");
         if (err)
             return done(err);
         state.db = db;
