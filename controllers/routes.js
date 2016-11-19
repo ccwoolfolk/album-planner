@@ -21,11 +21,10 @@ const model = require("../models/event.js");
  */
 exports.getHome = function (req, res) {
     
-    let renderData = {};
-    if (req.isAuthenticated()) {
-        renderData.userId = req.user.id;
-        renderData.name = req.user.name;
-    }
+    let renderData = req.isAuthenticated() ?  {
+        userId: req.user.id,
+        name: req.user.name,
+    } : {};
     
     res.render("index", renderData);
 
@@ -208,7 +207,12 @@ exports.postUpdateEventName = function(req, res, next) {
  * 
  */
 exports.getContact = function(req, res) {
-    res.render("contact");
+    let renderData = req.isAuthenticated() ?  {
+        userId: req.user.id,
+        name: req.user.name,
+    } : {};
+    
+    res.render("contact", renderData);
 };
 
 
