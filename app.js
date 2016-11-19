@@ -42,7 +42,8 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
     clientID: "1791667527746166",
     clientSecret: "ed3f7bd8a346109958a8a9f03798d548",
-    callbackURL: "https://album-planner.herokuapp.com/auth/facebook/callback"
+    //callbackURL: "https://album-planner.herokuapp.com/auth/facebook/callback"
+    callbackURL: "http://www.album-planner.com/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       //console.log("Profile:", profile);
