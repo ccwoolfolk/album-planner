@@ -10,8 +10,8 @@ let state = {
     mode: null
 }
 
-const PRODUCTION_URI = "mongodb://" + process.env.IP + ":" + "27017/production";
-const TEST_URI = "mongodb://" + process.env.IP + ":" + "27017/test";
+const PRODUCTION_URI = process.env.MONGOLAB_URI || "mongodb://" + process.env.IP + ":" + "27017/production";
+const TEST_URI = process.env.MONGOLAB_URI || "mongodb://" + process.env.IP + ":" + "27017/test";
 
 exports.MODE_TEST = "mode_test";
 exports.MODE_PRODUCTION = "mode_production";
