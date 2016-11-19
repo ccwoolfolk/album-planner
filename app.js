@@ -1,6 +1,7 @@
 "use strict";
 
-/* Arguments to 'node app.js' should be gmail account, password */
+/* Arguments to 'node app.js' should be gmail account, password, domain */
+const domainName = process.argv[4] || "http://www.album-planner.com";
 const emailCredentials = [process.argv[2] || process.env.EMAILADDRESS, process.argv[3] || process.env.EMAILAUTH];
 
 const express = require("express");
@@ -42,8 +43,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
     clientID: "1791667527746166",
     clientSecret: "ed3f7bd8a346109958a8a9f03798d548",
-    //callbackURL: "https://album-planner.herokuapp.com/auth/facebook/callback"
-    callbackURL: "http://www.album-planner.com/auth/facebook/callback"
+    callbackURL: domainName + "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       //console.log("Profile:", profile);
@@ -144,6 +144,5 @@ app.get("/test/:id", (req, res) => model.all((err, events) => {
 
 DB.connect(DB.MODE_TEST, () => DB.drop(() => DB.fixtures(fixtures, () => {
     const port = process.env.PORT || 8080;
-    console.log("Added:", JSON.stringify(fixtures));
     app.listen(port, () => console.log("listening on", port) );
 })));

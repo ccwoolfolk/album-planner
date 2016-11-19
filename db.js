@@ -61,7 +61,6 @@ exports.fixtures = function(data, done) {
         return done(new Error('Missing database connection.'));
 
     let names = Object.keys(data.collections);
-    console.log("Adding these keys to DB:", names);
     
     async.each(names, function(name, cb) {
         db.createCollection(name, function(err, collection) {
