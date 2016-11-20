@@ -18,10 +18,15 @@ html
                     div.text-box
                         h1 Album Planner
                         p Never miss a shot again
-                    a(href="/auth/facebook")
-                        button#try-button
-                            h3 Sign In With 
-                                i.fa.fa-facebook-square
+                    if userId
+                        a(href="/events")
+                            button#try-button
+                                h3 View Your Events
+                    else
+                        a(href="/auth/facebook")
+                            button#try-button
+                                h3 Sign In With 
+                                    i.fa.fa-facebook-square
                         
                 div.col-sm-3
             div.row
