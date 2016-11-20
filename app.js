@@ -126,7 +126,8 @@ app.get("/events/:eventId", ensureAuthenticated, route.getEventDetails);
 
 
 app.post("/events/:eventId", ensureAuthenticated, route.postNewScene, 
-    route.postAddSubject, route.postRemoveSubject, route.postUpdateEventName,
+    route.postAddSubject, route.postRemoveSubject, 
+    route.postToggleSceneComplete, route.postUpdateEventName,
     (req, res) => {
         res.redirect("/events/" + req.params.eventId);
     });

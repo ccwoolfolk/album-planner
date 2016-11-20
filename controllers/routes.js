@@ -198,6 +198,20 @@ exports.postRemoveSubject = function(req, res, next) {
 };
 
 /**
+ * Toggle completion status for a scene
+ * 
+ */
+exports.postToggleSceneComplete = function(req, res, next) {
+    if (req.body.action == "toggle complete") {
+        model.toggleSceneComplete(req.user.id, req.params.eventId,
+        req.body.sceneIdx, createEventCallback());
+    }
+    
+    next();
+}
+
+
+/**
  * Update an event name
  * 
  */

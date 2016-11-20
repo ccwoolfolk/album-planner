@@ -49,6 +49,11 @@ $("document").ready(function() {
         var subjectIdx = idArr[3];
         removeSubject(sceneIdx, subjectIdx);
     });
+    
+    $(".toggle-complete").click(function() {
+        var idArr = $(this).attr("id").split("-");
+        toggleComplete(idArr[1]);
+    });
 });
 
 function refresh(data) {
@@ -74,6 +79,15 @@ function removeSubject(sceneIdx, subjectIdx) {
         action: "remove subject",
         sceneIdx: sceneIdx,
         subjectIdx: subjectIdx
+    },
+    refresh);
+}
+
+function toggleComplete(sceneIdx) {
+    $.post(window.location.href,
+    {
+        action: "toggle complete",
+        sceneIdx: sceneIdx
     },
     refresh);
 }
