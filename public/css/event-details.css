@@ -38,6 +38,24 @@ h1, h2, h3 {
     background-color: rgb(230,230,230);
 }
 
+.toggle-complete {
+    color: #FF723D;
+    cursor: pointer;
+}
+
+.complete {
+    color: lightgray;
+}
+
+.remove-scene {
+    color: lightgray;
+    float: right;
+    cursor: pointer;
+}
+.complete .toggle-complete {
+    color: #009C79;
+}
+
 .fa-male {
     color: rgb(80, 155, 217);
 }

@@ -27,10 +27,12 @@ html
             div.row
                 
                 each scene, index in details.scenes_detailed
-                    div(class="col-sm-3 col-xs-12")
-                        div.scenes
+                    div.col-sm-3.col-xs-12
+                        div.scenes(class= scene.complete ? "complete" : undefined)
+                            i.fa.fa-check-circle-o.fa-3x.toggle-complete(id="scene-"+index+"-toggle-complete")
+                            i.fa.fa-times-circle-o.fa-3x.remove-scene
                             ul.fa-ul
-                                each subject, subjectIdx in scene
+                                each subject, subjectIdx in scene.subjects
                                     li= subject.name + " "
                                         if subject.gender =="male"
                                             i(class="fa fa-male fa-li")
@@ -38,24 +40,26 @@ html
                                             i(class="fa fa-female fa-li")
                                         else
                                             i(class="fa fa-question-circle-o fa-li")
-                                        i.fa.fa-close.remove-subject(id="scene-"+index+"-subject-"+subjectIdx+"-remove")
+                                        if !scene.complete
+                                            i.fa.fa-close.remove-subject(id="scene-"+index+"-subject-"+subjectIdx+"-remove")
                                         
-                            div.input-group
-                                input(id="new-subject-name-"+index type="text" class="form-control" aria-label="New subject name" placeholder="Name...")
-                                
-                                div.input-group-btn
-                                    button(type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
-                                        span.caret
-                                        span.sr-only Toggle Dropdown
+                            if !scene.complete
+                                div.input-group
+                                    input(id="new-subject-name-"+index type="text" class="form-control" aria-label="New subject name" placeholder="Name...")
                                     
-                                    ul.dropdown-menu
-                                        each subject, subjectIndex in details.subjects
-                                            li.dropdown-choice(id="scene-"+index+"-subject-"+subjectIndex)= subject.name
-
-                                    button(id="scene-"+index class="btn btn-default add-male" type="button")
-                                        i.fa.fa-male
-                                    button(id="scene-"+index class="btn btn-default add-female" type="button")
-                                        i.fa.fa-female
+                                    div.input-group-btn
+                                        button(type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                                            span.caret
+                                            span.sr-only Toggle Dropdown
+                                        
+                                        ul.dropdown-menu
+                                            each subject, subjectIndex in details.subjects
+                                                li.dropdown-choice(id="scene-"+index+"-subject-"+subjectIndex)= subject.name
+    
+                                        button(id="scene-"+index class="btn btn-default add-male" type="button")
+                                            i.fa.fa-male
+                                        button(id="scene-"+index class="btn btn-default add-female" type="button")
+                                            i.fa.fa-female
                                         
 
                                         

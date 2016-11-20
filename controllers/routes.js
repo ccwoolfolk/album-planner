@@ -104,6 +104,15 @@ exports.getEventDetails = function(req, res) {
             console.error(err)
 
         details["scenes_detailed"] = helpers.sceneDetails(details.subjects, details.scenes);
+        
+        // Pair complete status with detailed subject list in single array of objects
+        details["scenes_detailed"] = details["scenes_detailed"].map(function(val, idx) {
+            return {
+                complete: details.scenes[idx].complete,
+                subjects: val
+            }
+        });
+        
         res.render("event-details", {
             userId: req.user.id,
             name: req.user.name,
