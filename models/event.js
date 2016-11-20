@@ -198,10 +198,18 @@ exports.addScene = function(userId, eventId, cb) {
     let db = DB.getDB();
 
     getEvents(userId, function(err, events) {
+        if (err) {
+            console.error(err);
+            return cb(err, null);
+        }
+        
         let idx = helpers.findEventIndex(eventId, events);
 
         let updateQuery = {};
-        updateQuery["events." + idx + ".scenes"] = {subjects: []}
+        updateQuery["events." + idx + ".scenes"] = {
+            subjects: [],
+            complete: false
+        };
 
         db.collection(COLLECTION).update(
             {"user_id": userId}, 
@@ -243,6 +251,38 @@ exports.removeSubject = function(userId, eventId, sceneIdx, subjectIdx, cb) {
     });
 };
 
+
+/**
+ * Change a scene completion status (false->true or true->false)
+ * 
+ * @param {string} userId - User ID
+ * @param {string} eventId - Event ID
+ * @param {integer} sceneIdx - Scene index within scene array
+ * @param {function} cb - Callback function
+ * 
+ */
+exports.toggleSceneComplete = function(userId, eventId, sceneIdx, cb) {
+    let db = DB.getDB();
+
+    getEvents(userId, function(err, events) {
+        if (err) {
+            console.error(err);
+            return cb(err, null);
+        }
+        
+        let idx = helpers.findEventIndex(eventId, events);
+        let key = "events." + idx + ".scenes." + sceneIdx + ".complete";
+        let currentCompletion = events[idx].scenes[sceneIdx].complete;
+        
+        let updateQuery = {};
+        updateQuery[key] = !currentCompletion;
+
+        db.collection(COLLECTION).update(
+            {"user_id": userId}, 
+            {$set: updateQuery},
+        (err, res) => cb(err,res));    
+    });
+};
 
 /**
  * Updates event name

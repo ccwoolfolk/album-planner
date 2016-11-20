@@ -138,6 +138,7 @@ describe('Model Event Tests', function() {
                 assert.equal(eventDetails.scenes.length, 4);
                 
                 assert.deepEqual(eventDetails.scenes[3].subjects, [])
+                assert.equal(eventDetails.scenes[3].complete, false);
                 done();
             });
 
@@ -212,10 +213,22 @@ describe('Model Event Tests', function() {
                 assert.equal(eventDetails.scenes[sceneIdx].subjects.length, 1);
                 assert.deepEqual(eventDetails.scenes[sceneIdx].subjects, [1]);
                 done();
-            })
-        })
-    })
-    
+            });
+        });
+    });
+
+    it("toggleSceneComplete()", function(done) {
+        let eventId = 1;
+        let sceneIdx = 1;
+        
+        Album.toggleSceneComplete(user_id, eventId, sceneIdx, function() {
+            Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+                assert.equal(eventDetails.scenes[sceneIdx].complete, false);
+                done();
+            });
+        });
+    });
+
     it("updateEventName()", function(done) {
         let newEventName = "new birthday event"
         let eventId = 1;

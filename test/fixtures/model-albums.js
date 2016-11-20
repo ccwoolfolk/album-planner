@@ -21,9 +21,9 @@ exports.data = {
                                 "gender": "female"  }
                         ],
                         "scenes": [
-                            {   "subjects": [1,2]   },
-                            {   "subjects": [2]     },
-                            {   "subjects": [1]     }
+                            { "subjects": [1,2], "complete": false },
+                            { "subjects": [2], "complete": true },
+                            { "subjects": [1], "complete": false }
                         ]
                     }, {
                         "event_id": 3,
