@@ -24,3 +24,15 @@
     border-radius: 10px;
     padding: 20px;
 }
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-callout-color {
+    color: #009C79;
+}
+
+.new-section {
+    padding-top: 40px;
+}
