@@ -1,4 +1,5 @@
 $("document").ready(function() {
+    var openWarnings = {};
     
     $("#btn-edit-name").click(function() {
         
@@ -54,6 +55,21 @@ $("document").ready(function() {
         var idArr = $(this).attr("id").split("-");
         toggleComplete(idArr[1]);
     });
+    
+    $(".remove-scene").click(function() {
+        var idArr = $(this).attr("id").split("-");
+        var sceneIdx = idArr[1];
+        if (openWarnings[sceneIdx]) {
+            $(this).parent().next().html("");
+            delete openWarnings[sceneIdx];
+        } else {
+            $(this).parent().next().html('<div class="alert alert-warning" role="alert"><strong>WARNING!</strong> This will permanently delete your scene! Click <a id="confirm-remove-' + sceneIdx + '" class="alert-link">here</a> if you are sure, or click the close button to cancel.</div>');
+            openWarnings[sceneIdx] = true;
+            $("#confirm-remove-"+sceneIdx).click(function() {
+                removeScene(sceneIdx);
+            });
+        }
+    });
 });
 
 function refresh(data) {
@@ -71,6 +87,15 @@ function createSubjectMaker(gender, sceneIdx, subjectIdx) {
             },
             refresh);
     }
+}
+
+function removeScene(sceneIdx) {
+    $.post(window.location.href,
+    {
+        action: "remove scene",
+        sceneIdx: sceneIdx
+    },
+    refresh);
 }
 
 function removeSubject(sceneIdx, subjectIdx) {

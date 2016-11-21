@@ -29,8 +29,10 @@ html
                 each scene, index in details.scenes_detailed
                     div.col-sm-3.col-xs-12
                         div.scenes(class= scene.complete ? "complete" : undefined)
-                            i.fa.fa-check-circle-o.fa-3x.toggle-complete(id="scene-"+index+"-toggle-complete")
-                            i.fa.fa-times-circle-o.fa-3x.remove-scene
+                            div
+                                i.fa.fa-check-circle-o.fa-3x.toggle-complete(id="scene-"+index+"-toggle-complete")
+                                i.fa.fa-times-circle-o.fa-3x.remove-scene(id="scene-"+index+"-remove")
+                            div
                             ul.fa-ul
                                 each subject, subjectIdx in scene.subjects
                                     li= subject.name + " "

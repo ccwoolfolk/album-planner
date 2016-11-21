@@ -229,6 +229,20 @@ describe('Model Event Tests', function() {
         });
     });
 
+    it("removeScene()", function(done) {
+        let eventId = 1;
+        let sceneIdx = 1;
+       
+        Album.removeScene(user_id, eventId, sceneIdx, function() {
+            Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+                assert.equal(eventDetails.scenes[0].subjects.length, 2);
+                assert.equal(eventDetails.scenes[1].subjects.length, 1);
+                assert.equal(eventDetails.scenes.length, 2);
+                done();
+            });
+       });
+    });
+
     it("updateEventName()", function(done) {
         let newEventName = "new birthday event"
         let eventId = 1;

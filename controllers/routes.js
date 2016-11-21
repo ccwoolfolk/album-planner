@@ -210,6 +210,19 @@ exports.postToggleSceneComplete = function(req, res, next) {
     next();
 }
 
+/**
+ * Remove a scene permanently
+ * 
+ */
+exports.postRemoveScene = function(req, res, next) {
+    if (req.body.action == "remove scene") {
+        model.removeScene(req.user.id, req.params.eventId,
+            req.body.sceneIdx, createEventCallback());
+    }
+    
+    next();
+};
+
 
 /**
  * Update an event name

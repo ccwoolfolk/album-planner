@@ -220,6 +220,36 @@ exports.addScene = function(userId, eventId, cb) {
 
 
 /**
+ * Remove a scene from an event
+ * 
+ * @param {string} userId - User ID
+ * @param {string} eventId - Event ID
+ * @param {integer} sceneIdx - Scene index within scene array
+ * @param {function} cb - Callback function
+ * 
+ */
+exports.removeScene = function(userId, eventId, sceneIdx, cb) {
+    let db = DB.getDB();
+    sceneIdx = parseInt(sceneIdx);
+    
+    getEvents(userId, function(err, events) {
+        let idx = helpers.findEventIndex(eventId, events);
+
+        let updateQuery = {}
+        let scenes = events[idx].scenes.slice();
+        scenes.splice(sceneIdx, 1);
+        updateQuery["events." + idx + ".scenes"] = scenes;
+        
+        db.collection(COLLECTION).update(
+            {"user_id": userId},
+            {$set: updateQuery},
+            (err, res) => cb(err, res)  );
+            
+    });
+};
+
+
+/**
  * Remove subject from a scene
  * 
  * @param {string} userId - User ID
