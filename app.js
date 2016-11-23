@@ -3,6 +3,7 @@
 /* Arguments to 'node app.js' should be gmail account, password, domain */
 const domainName = process.argv[4] || "http://www.album-planner.com";
 const emailCredentials = [process.argv[2] || process.env.EMAILADDRESS, process.argv[3] || process.env.EMAILAUTH];
+const port = process.env.PORT || 8080;
 
 const express = require("express");
 const pug = require("pug");
@@ -10,7 +11,6 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 
 const model = require("./models/event.js");
-//const helpers = require('./helpers/functions.js');
 const route = require("./controllers/routes.js");
 
 const fixtures = require('./test/fixtures/model-albums').data;
@@ -35,14 +35,11 @@ app.use(function(req, res, next) {
 });
 
 
-
-
-
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new FacebookStrategy({
-    clientID: "1791667527746166",
-    clientSecret: "ed3f7bd8a346109958a8a9f03798d548",
+    clientID: process.env.FB_CLIENTID || "1791667527746166",
+    clientSecret: process.env.FB_CLIENTSECRET || "ed3f7bd8a346109958a8a9f03798d548",
     callbackURL: domainName + "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
@@ -54,7 +51,6 @@ passport.use(new FacebookStrategy({
           }
           return done(err, userInfo);
       });
-    //return done(null, profile);
   }
 ));
 
@@ -131,19 +127,22 @@ app.post("/events/:eventId", ensureAuthenticated, route.postNewScene,
     route.postRemoveScene, (req, res) => {
         res.redirect("/events/" + req.params.eventId);
     });
+
+
+if (process.env.DBMODE === "PRODUCTION") {
+    DB.connect(DB.MODE_PRODUCTION, function() {
+        app.listen(port, () => console.log("listening on", port));
+    });
     
+} else if (!process.env.DBMODE || process.env.DBMODE === "TEST") {
+    app.get("/test/:id", (req, res) => model.all((err, events) => {
+        if (err) 
+            console.error(err);
+        res.json(events);
+    }));
 
-/* testing only */
-app.get("/test/:id", (req, res) => model.all((err, events) => {
-    if (err) 
-        console.error(err);
-    console.log(events);
-    res.json(events);
-    
-}));
+    DB.connect(DB.MODE_TEST, () => DB.drop(() => DB.fixtures(fixtures, () => {
+        app.listen(port, () => console.log("listening on", port) );
+    })));
 
-
-DB.connect(DB.MODE_TEST, () => DB.drop(() => DB.fixtures(fixtures, () => {
-    const port = process.env.PORT || 8080;
-    app.listen(port, () => console.log("listening on", port) );
-})));
+} else console.error("Invalid DBMODE setting");
