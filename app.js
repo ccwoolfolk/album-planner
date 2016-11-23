@@ -6,7 +6,6 @@ const emailCredentials = [process.argv[2] || process.env.EMAILADDRESS, process.a
 const port = process.env.PORT || 8080;
 
 const express = require("express");
-const pug = require("pug");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 
