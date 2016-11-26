@@ -9,6 +9,17 @@ const model = require("../models/event.js");
 
 
 /**
+ * Display 404 error
+ * @param {Object} req
+ * @param {Object} res
+ * @param {function} next
+ * 
+ */
+exports.display404 = function(req, res) {
+    res.redirect("/");
+};
+
+/**
  * Render the homepage
  * 
  * @param {Object} req

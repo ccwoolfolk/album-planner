@@ -126,6 +126,8 @@ app.post("/events/:eventId", ensureAuthenticated, route.postNewScene,
     route.postRemoveScene, (req, res) => {
         res.redirect("/events/" + req.params.eventId);
     });
+    
+app.use(route.display404);
 
 
 if (process.env.DBMODE === "PRODUCTION") {
