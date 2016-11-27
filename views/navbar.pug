@@ -1,26 +1,32 @@
 nav.navbar.navbar-default
     div.container-fluid
-
-        ul.nav.navbar-nav
-            li
-                a(href="/") Home
-
-            li
-                a(href="/contact") Contact
-
-            if userId
+        div.navbar-header
+            button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+        div.collapse.navbar-collapse#bs-example-navbar-collapse-1
+            ul.nav.navbar-nav
                 li
-                    a(href="/events") Events
-        
-        ul.nav.navbar-nav.navbar-right
-            if userId
+                    a(href="/") Home
+    
                 li
-                    p.navbar-text= "Logged in as " + name
-                li
-                    a(href="/logout") Sign Out
-            else
-                li
-                    p.navbar-text
-                        a(href="/auth/facebook")
-                            i.fa.fa-facebook-square
-                            span   Sign in with Facebook
+                    a(href="/contact") Contact
+    
+                if userId
+                    li
+                        a(href="/events") Events
+            
+            ul.nav.navbar-nav.navbar-right
+                if userId
+                    li
+                        p.navbar-text= "Signed In as " + name
+                    li
+                        a(href="/logout") Sign Out
+                else
+                    li
+                        p.navbar-text
+                            a(href="/auth/facebook")
+                                i.fa.fa-facebook-square
+                                span   Sign in with Facebook
