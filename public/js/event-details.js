@@ -1,4 +1,6 @@
 $("document").ready(function() {
+    // Tracks warning dialogue boxes related to deleting scene
+    // Prevents creating two warnings for the same scene
     var openWarnings = {};
     
     $("#btn-edit-name").click(function() {
