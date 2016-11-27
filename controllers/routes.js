@@ -97,6 +97,24 @@ exports.postEvents = function(req, res) {
         });
 };
 
+/**
+ * Remove an event from a user profile
+ * 
+ * @param {Object} req
+ * @param {string} req.user.id
+ * @param {string} req.body.eventId
+ * @param {Object} res
+ * @param {function} res.send
+ * 
+ */
+exports.deleteRemoveEvent = function(req, res) {
+    model.removeEvent(req.user.id, req.body.eventId, (err, results) => {
+        if (err)
+            console.error(err);
+
+        res.send("ok");
+    });
+};
 
 let getEventDetails =
 /**

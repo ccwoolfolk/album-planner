@@ -74,15 +74,11 @@ passport.deserializeUser(function(user, done) {
 });
 
 
-
-
 app.get('/', route.getHome);
 app.get('/logout', route.getLogout);
 
-
 app.get("/contact", route.getContact);
 app.post("/contact", route.createPostContact(emailCredentials));
-
 
 // we will call this to start the Facebook Login process
 app.get('/auth/facebook', passport.authenticate('facebook'));
@@ -115,6 +111,9 @@ app.get("/events", ensureAuthenticated, route.getEvents);
 
 /* Add a new event */
 app.post("/events", ensureAuthenticated, route.postEvents);
+
+/* Remove an event */
+app.delete('/events', ensureAuthenticated, route.deleteRemoveEvent);
 
 /* Show the event details when provided a user ID and event ID */
 app.get("/events/:eventId", ensureAuthenticated, route.getEventDetails);

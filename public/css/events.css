@@ -20,6 +20,16 @@
 
 .events h3 {
     color: #009C79;
-    
+    margin-top: 5px;
 }
 
+.remove-event {
+    color: #FF723D;
+    cursor: pointer;
+    float: right;
+}
+
+
+.alert-link {
+    cursor: pointer;
+}

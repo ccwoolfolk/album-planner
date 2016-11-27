@@ -144,10 +144,10 @@ exports.removeEvent = function(userId, eventId, cb) {
     db.collection(COLLECTION).update(
         {"user_id": userId},
         {$pull: {
-            events: { "event_id": eventId }
+            events: { "event_id": parseInt(eventId) }
         }},
         (err, res) => cb(err, res));
-}
+};
 
 
 let getEventDetails =

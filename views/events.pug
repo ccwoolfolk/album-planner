@@ -2,6 +2,7 @@ html
     head
         title Events Home
         include header
+        link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
         link(rel="stylesheet", href="css/events.css", type='text/css' )
         script(src="/js/events.js", type='text/javascript' )
     body
@@ -12,7 +13,9 @@ html
                 
                     div(class="col-sm-3 col-xs-12")
                         div.events
+                            i.fa.fa-close.remove-event(id="remove-event-"+ev.event_id)
                             h3= ev.name
+                            div.warning-container
                             p= [(new Date(ev.date)).getMonth() + 1, (new Date(ev.date)).getDate(), (new Date(ev.date)).getFullYear()].join("-")
                             a(href="/events/" + ev.event_id)
                                 button.view-button View It
