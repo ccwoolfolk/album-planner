@@ -3,15 +3,24 @@ $("document").ready(function() {
     // Prevents creating two warnings for the same scene
     let openWarnings = {};
 
+    $("#datepicker").datepicker();
+
     $("#submit-new-event").click(function() {
         let eventName = $("#new-event-name").val();
+        let dateInput = $("#datepicker").datepicker("getDate");
+
         if (eventName === "")
-            alert("Please provide an event name!");
-        else
-            $.post(window.location.href,
-                {eventName: eventName},
-                (data) => window.location = window.location.href);
-            
+            return alert("Please provide an event name!");
+        if (dateInput === null) 
+            return alert("Please provide an event date!");
+
+        $.post(window.location.href,
+            {
+                eventName: eventName,
+                eventDate: dateInput.toDateString()
+            },
+            (data) => window.location = window.location.href);
+
     });
     
     $(".remove-event").click(function() {

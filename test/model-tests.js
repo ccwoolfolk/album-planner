@@ -101,6 +101,16 @@ describe('Model Event Tests', function() {
         });
     });
     
+    it("addEvent() generates error and makes no change when provided invalid date", function(done) {
+        Album.addEvent(user_id, "test", "abcd", function(eventErr, id) {
+            Album.getEvents(user_id, function(err, results) {
+                assert(eventErr);
+                assert.equal(results.length, 2);
+                done();
+            });
+        });
+    });
+    
     it("removeEvent()", function(done) {
         Album.removeEvent(user_id, "1", function(err, results) {
             Album.getEvents(user_id, function(err, results) {

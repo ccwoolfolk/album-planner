@@ -5,6 +5,10 @@ html
         link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
         link(rel="stylesheet", href="css/events.css", type='text/css' )
         script(src="/js/events.js", type='text/javascript' )
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     body
         include navbar
         div.container
@@ -19,12 +23,22 @@ html
                             p= [(new Date(ev.date)).getMonth() + 1, (new Date(ev.date)).getDate(), (new Date(ev.date)).getFullYear()].join("-")
                             a(href="/events/" + ev.event_id)
                                 button.view-button View It
-                    
+            div.row        
                 div(class="col-sm-3 col-xs-12")
                     div.events#add-new-event
                         h3 Add new event
-                        div(class="input-group")
-                            
-                            input(id="new-event-name" type="text" class="form-control" placeholder="Event name")
-                            span(class="input-group-btn")
+                        form
+                            div.form-group
+                                div.input-group
+                                    span.input-group-addon
+                                        i.fa.fa-users
+                                    input.form-control(id="new-event-name" type="text" placeholder="Event name")
+                            div.form-group
+                                div.input-group
+                                    span.input-group-addon
+                                        i.fa.fa-calendar
+                                    input#datepicker.form-control(type="text" placeholder="Event date")
+                            div.form-group
                                 button(id="submit-new-event" class="btn btn-default" type="button") Add!
+        
+        

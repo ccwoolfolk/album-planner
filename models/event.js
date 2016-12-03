@@ -97,13 +97,17 @@ exports.getEvents = function(user_id, cb) {
  * 
  * @param {string} userId - User ID
  * @param {string} eventName - Event display name
- * @param {string} eventDate - Event display date
+ * @param {string} eventDate - Event display date for Date.parse() evaluation
  * @param {function} cb - Callback function
  * 
  * @returns Calls callback with (err, results) where results is output of update
  * 
  */
 exports.addEvent = function(userId, eventName, eventDate, cb) {
+    // Check for valid date input
+    if (isNaN(Date.parse(eventDate)))
+        return cb(new Error("Invalid date input"), null);
+    
     let db = DB.getDB();
     getEvents(userId, function(err, allEvents) {
 

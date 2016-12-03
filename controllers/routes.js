@@ -81,15 +81,16 @@ exports.getLogout = function(req, res) {
  * @param {Object} req
  * @param {string} req.user.id
  * @param {string} req.body.eventName
+ * @param {string} req.body.eventDate
  * @param {Object} res
  * 
  */
 exports.postEvents = function(req, res) {
-    let newDate = new Date();
+
     model.addEvent(
         req.user.id,
         req.body.eventName,
-        newDate.valueOf(),
+        req.body.eventDate,
         (err, id) => {
             if (err)
                 console.error(err);
