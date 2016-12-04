@@ -50,8 +50,9 @@ exports.addUser = function(newUser, cb) {
             return cb(err, null);
         }
         
+        // Default to user_id of 1 if no existing users
         let idArr = results.map((val) => {return parseInt(val.user_id)});
-        newUser.user_id = (Math.max.apply(null, idArr) + 1).toString();
+        newUser.user_id = idArr.length === 0 ? "1" : (Math.max.apply(null, idArr) + 1).toString();
         db.collection(COLLECTION).insert(newUser, cb);
     });
 };
