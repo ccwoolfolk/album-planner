@@ -2,3 +2,4 @@ node_modules
 mongod
 mongod-close
 data
+nodemon
