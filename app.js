@@ -1,8 +1,7 @@
 "use strict";
 
-/* Arguments to 'node app.js' should be gmail account, password, domain */
-const domainName = process.argv[4] || "http://www.album-planner.com";
-const emailCredentials = [process.argv[2] || process.env.EMAILADDRESS, process.argv[3] || process.env.EMAILAUTH];
+const domainName = process.env.DOMAINNAME;
+const emailCredentials = [process.env.EMAILADDRESS, process.env.EMAILAUTH];
 const port = process.env.PORT || 8080;
 
 const express = require("express");
@@ -37,12 +36,11 @@ app.use(function(req, res, next) {
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new FacebookStrategy({
-    clientID: process.env.FB_CLIENTID || "1791667527746166",
-    clientSecret: process.env.FB_CLIENTSECRET || "ed3f7bd8a346109958a8a9f03798d548",
+    clientID: process.env.FB_CLIENTID,
+    clientSecret: process.env.FB_CLIENTSECRET,
     callbackURL: domainName + "/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-      //console.log("Profile:", profile);
       return model.getUserId(profile.provider, profile.id, (err, userId) => {
           let userInfo = {
               id: userId,
