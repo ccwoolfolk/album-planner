@@ -347,6 +347,33 @@ exports.updateEventName = function(newName, userId, eventId, cb) {
 
 
 /**
+ * Updates event date
+ * 
+ * @param {string} newDate
+ * @param {string} userId - User ID
+ * @param {string} eventId - Event ID
+ * @param {function} cb - Callback function
+ * 
+ * @returns Calls callback with (err, results) from update
+ * 
+ */
+exports.updateEventDate = function(newDate, userId, eventId, cb) {
+    let db = DB.getDB();
+    
+    getEvents(userId, function(err, events) {
+        let idx = helpers.findEventIndex(eventId, events);
+        let updateQuery = {}
+        updateQuery["events." + idx + ".date"] = newDate;
+        
+        db.collection(COLLECTION).update(
+            {"user_id": userId},
+            {$set: updateQuery},
+            (updateErr, res) => cb(updateErr, res) );
+    });
+};
+
+
+/**
  * Add subject to a scene
  * 
  * @param {string} userId - User ID

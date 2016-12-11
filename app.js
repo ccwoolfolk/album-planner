@@ -116,6 +116,8 @@ app.delete('/events', ensureAuthenticated, route.deleteRemoveEvent);
 /* Show the event details when provided a user ID and event ID */
 app.get("/events/:eventId", ensureAuthenticated, route.getEventDetails);
 
+/* Change the date of an event */
+app.put("/events/:eventId", ensureAuthenticated, route.putEventDate);
 
 app.post("/events/:eventId", ensureAuthenticated, route.postNewScene, 
     route.postAddSubject, route.postRemoveSubject, 

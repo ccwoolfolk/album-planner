@@ -20,7 +20,18 @@ $("document").ready(function() {
         $("#name-container").css("display", "none");
         $("#date-edit-container").show("fast");
         $("#btn-submit-date").click(function() {
-            alert("Submit date logic here");
+            
+            let newDate = $("#input-date-edit").datepicker("getDate").toDateString();
+            if (newDate === "")
+                return;
+                
+            let request = $.ajax({
+                url: window.location.href,
+                method: "PUT",
+                data: { date: newDate },
+                success: refresh
+            });
+            
         });
     });
     

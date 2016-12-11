@@ -265,6 +265,18 @@ describe('Model Event Tests', function() {
         });
     });
     
+    it("updateEventDate()", function(done) {
+        let newEventDate = "Mon Jan 15 2018";
+        let eventId = 1;
+        
+        Album.updateEventDate(newEventDate, user_id, eventId, function() {
+            Album.getEventDetails(user_id, eventId, function(err, eventDetails) {
+                assert.equal(eventDetails.date, newEventDate);
+                done();
+            });
+        });
+    });
+    
     it("getUserId() with existing user", function(done) {
        let provider = "facebook";
        let loginId = "10101068906050962";

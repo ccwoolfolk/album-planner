@@ -177,6 +177,21 @@ let createEventCallback = function() {
     }
 };
 
+
+/**
+ * Change the event date
+ * 
+ */
+exports.putEventDate = function(req, res, next) {
+    model.updateEventDate(req.body.date, req.user.id, req.params.eventId,
+        function(err, result) {
+            if (err)
+                console.error(err);
+            
+            res.status(200).send();
+        });
+};
+
 /**
  * Create a new scene within an event
  * 
