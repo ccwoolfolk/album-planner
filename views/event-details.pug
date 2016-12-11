@@ -11,14 +11,14 @@ html
         include navbar
         div.container
             div.row
-                div(class="col-xs-12")
+                div.col-sm-4.col-xs-12
                     div(id="name-edit-container")
                     
                         div.input-group
                             input(id="input-name-edit" type="text" class="form-control" placeholder= details.name)
                             span.input-group-btn
-                                button.btn.btn-default(id="btn-submit-name" type="button") Go!
-
+                                button.btn.btn-default(id="btn-submit-name" type="button") Rename
+                div.col-xs-12
                     div#name-container
                         h1= details.name + " "
                             sup

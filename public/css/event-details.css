@@ -25,8 +25,14 @@ h1, h2, h3 {
     margin-top: 0px;
 }
 
+.container {
+    margin-bottom: 40px;
+}
+
 .scenes {
     padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border-radius: 5px;
     font-size: larger;
     border-width: thin;
