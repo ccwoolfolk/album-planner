@@ -15,6 +15,15 @@ $("document").ready(function() {
         });
     });
     
+    $("#btn-edit-date").click(function() {
+        $("#input-date-edit").datepicker();
+        $("#name-container").css("display", "none");
+        $("#date-edit-container").show("fast");
+        $("#btn-submit-date").click(function() {
+            alert("Submit date logic here");
+        });
+    });
+    
     $("#submit-new-scene").click(function() {
 
         $.post(window.location.href,
