@@ -20,7 +20,7 @@ html
                             i.fa.fa-close.remove-event(id="remove-event-"+ev.event_id)
                             h3= ev.name
                             div.warning-container
-                            p= [(new Date(ev.date)).getMonth() + 1, (new Date(ev.date)).getDate(), (new Date(ev.date)).getFullYear()].join("-")
+                            p= ev.pretty_date
                             a(href="/events/" + ev.event_id)
                                 button.view-button View It
             div.row        

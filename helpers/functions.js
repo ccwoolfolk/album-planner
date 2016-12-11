@@ -72,3 +72,21 @@ exports.subjectIsNew = function(subject, existingSubjects) {
     let existingIds = existingSubjects.map((val) => { return val["subject_id"] });
     return existingIds.indexOf(subject["subject_id"]) === -1;
 }
+
+/**
+ * Convert a date from the model to a standardized format
+ * 
+ * @param {string} dateInput - String the can be parsed by new Date()
+ * 
+ * @returns {string} String of form "month-date-4DigitYear"
+ * 
+ */
+exports.formatDate = function(dateInput) {
+    let date = new Date(dateInput);
+    
+    let m = date.getMonth() + 1;
+    let d = date.getDate();
+    let y = date.getFullYear();
+    
+    return [m, d, y].join("-");
+};

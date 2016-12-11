@@ -56,7 +56,13 @@ exports.getEvents = function(req, res) {
     model.getEvents(req.user.id, function(err, events) {
         if (err)
             console.error(err);
-
+            
+        // Add pretty dates
+        events = events.map(function(event) {
+            event.pretty_date = helpers.formatDate(event.date);
+            return event;
+        });
+        
         res.render("events", {userId: req.user.id, name: req.user.name, events: events});
     });
 };
@@ -134,6 +140,9 @@ exports.getEventDetails = function(req, res) {
             console.error(err)
 
         details["scenes_detailed"] = helpers.sceneDetails(details.subjects, details.scenes);
+        
+        // Add pretty date
+        details["pretty_date"] = helpers.formatDate(details.date);
         
         // Pair complete status with detailed subject list in single array of objects
         details["scenes_detailed"] = details["scenes_detailed"].map(function(val, idx) {

@@ -39,5 +39,11 @@ describe('Helper Function Tests', function() {
         assert(!helpers.subjectIsNew({"subject_id": 2}, fixtures.collections.users[0].events[0].subjects))
         assert(helpers.subjectIsNew({"subject_id": 3}, fixtures.collections.users[0].events[0].subjects))
         done();
-    })
+    });
+    
+    it("formatDate()", function(done) {
+        assert.equal(helpers.formatDate("Jan 21, 2018"), "1-21-2018");
+        assert.equal(helpers.formatDate("January 21 2018"), "1-21-2018");
+        done();
+    });
 });

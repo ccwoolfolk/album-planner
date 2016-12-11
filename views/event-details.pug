@@ -6,24 +6,35 @@ html
         script(src="/js/event-details.js", type='text/javascript' )
         
         link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+        
+        //- Datepicker functionality
+        link(rel="stylesheet" href="/js/datepicker/jquery-ui.css")
+        script(src="/js/datepicker/jquery-ui.js")
     
     body
         include navbar
         div.container
             div.row
                 div.col-sm-4.col-xs-12
-                    div(id="name-edit-container")
+                    div#name-edit-container
                     
                         div.input-group
                             input(id="input-name-edit" type="text" class="form-control" placeholder= details.name)
                             span.input-group-btn
-                                button.btn.btn-default(id="btn-submit-name" type="button") Rename
+                                button.btn.btn-default#btn-submit-name(type="button") Rename
+                    div#date-edit-container
+                        div.input-group
+                            input.form-control#input-date-edit(type="text" placeholder= details.pretty_date)
+                            span.input-group-btn
+                                button.btn.btn-default#btn-submit-date(type="button") Submit
                 div.col-xs-12
                     div#name-container
                         h1= details.name + " "
                             sup
-                                i.fa.fa-pencil-square-o(id="btn-edit-name")
-                        p= [(new Date(details.date)).getMonth() + 1, (new Date(details.date)).getDate(), (new Date(details.date)).getFullYear()].join("-")
+                                i.fa.fa-pencil-square-o.btn-edit#btn-edit-name
+                        p= details.pretty_date + " "
+                            sup
+                                i.fa.fa-pencil-square-o.btn-edit#btn-edit-date
             div.row
                 
                 each scene, index in details.scenes_detailed
