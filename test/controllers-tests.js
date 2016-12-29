@@ -73,7 +73,7 @@ describe("Route tests", function() {
    });
    
    it("getEvents()", function(done) {
-       let req = createReq(true)
+       let req = createReq(true);
        
        let renderResults = {};
        
@@ -92,8 +92,47 @@ describe("Route tests", function() {
        
    });
    
+   it("getEventDetails()", function(done) {
+       let req = createReq(true);
+       req.params = {
+           eventId: "1"
+       };
+       
+       let res = {
+           render: (fileName, data) => {
+               assert.equal(fileName, "event-details");
+               assert.equal(data.details["scenes_detailed"][0].subjects[0].name, "oscar");
+               assert.equal(data.details["scenes_detailed"][0].subjects[1].name, "rylee");
+               done();
+           }
+       };
+       
+       route.getEventDetails(req, res);
+       
+   });
+   
+   it("getEventPrintDetails()", function(done) {
+       let req = createReq(true);
+       req.params = {
+           eventId: "1"
+       };
+       
+       let res = {
+           render: (fileName, data) => {
+               assert.equal(fileName, "event-print-details");
+               assert.equal(data.details["scenes_detailed"][0].subjects[0].name, "oscar");
+               assert.equal(data.details["scenes_detailed"][0].subjects[1].name, "rylee");
+               done();
+           }
+       };
+       
+       route.getEventPrintDetails(req, res);
+       
+   });
+   
+   
    it("postEvents()");
-   it("getEventDetails()");
+   
    it("postNewScene()");
    it("postAddSubject()");
    it("postRemoveSubject()");

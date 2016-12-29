@@ -123,9 +123,45 @@ exports.deleteRemoveEvent = function(req, res) {
     });
 };
 
+
+/**
+ * Create a function that gets a specific event and renders in view or print form
+ * 
+ * @param {string} renderFile Filename to render
+ * 
+ */
+let createGetEventDetails = function(fileName) {
+
+    return function(req, res) {
+        model.getEventDetails(req.user.id, req.params.eventId, (err, details) => {
+            if (err)
+                console.error(err)
+    
+            details["scenes_detailed"] = helpers.sceneDetails(details.subjects, details.scenes);
+            
+            // Add pretty date
+            details["pretty_date"] = helpers.formatDate(details.date);
+            
+            // Pair complete status with detailed subject list in single array of objects
+            details["scenes_detailed"] = details["scenes_detailed"].map(function(val, idx) {
+                return {
+                    complete: details.scenes[idx].complete,
+                    subjects: val
+                }
+            });
+            
+            res.render(fileName, {
+                userId: req.user.id,
+                name: req.user.name,
+                details: details});
+        });
+    };
+};
+
+
 let getEventDetails =
 /**
- * Get a specific event
+ * Gets a specific event and renders in view form
  * 
  * @param {Object} req
  * @param {string} req.user.id
@@ -134,30 +170,20 @@ let getEventDetails =
  * @param {function} res.render
  * 
  */
-exports.getEventDetails = function(req, res) {
-    model.getEventDetails(req.user.id, req.params.eventId, (err, details) => {
-        if (err)
-            console.error(err)
+exports.getEventDetails = createGetEventDetails("event-details");
 
-        details["scenes_detailed"] = helpers.sceneDetails(details.subjects, details.scenes);
-        
-        // Add pretty date
-        details["pretty_date"] = helpers.formatDate(details.date);
-        
-        // Pair complete status with detailed subject list in single array of objects
-        details["scenes_detailed"] = details["scenes_detailed"].map(function(val, idx) {
-            return {
-                complete: details.scenes[idx].complete,
-                subjects: val
-            }
-        });
-        
-        res.render("event-details", {
-            userId: req.user.id,
-            name: req.user.name,
-            details: details});
-    });
-};
+
+/**
+ * Gets a specific event and renders in printable form
+ * 
+ * @param {Object} req
+ * @param {string} req.user.id
+ * @param {string} req.params.eventId
+ * @param {Object} res
+ * @param {function} res.render
+ * 
+ */
+exports.getEventPrintDetails = createGetEventDetails("event-print-details");
 
 
 /**
@@ -309,9 +335,7 @@ exports.getContact = function(req, res) {
 /**
  * Return a function that sends a contact form message
  * 
- * @param {string[]} emailCredentials
- * @param {string} emailCredentials[0] - gmail account name
- * @param {string} emailCredentials[1] - gmail account password
+ * @param {string[]} emailCredentials - [gmail account name, gmail account pass]
  * 
  * @returns {function} Routing function for POST operations on contact page
  * 
