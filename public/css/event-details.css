@@ -104,3 +104,7 @@ h1, h2, h3 {
 .alert-link {
     cursor: pointer;
 }
+
+#print {
+    padding-top: 20px;
+}

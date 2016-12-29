@@ -116,6 +116,10 @@ app.delete('/events', ensureAuthenticated, route.deleteRemoveEvent);
 /* Show the event details when provided a user ID and event ID */
 app.get("/events/:eventId", ensureAuthenticated, route.getEventDetails);
 
+/* Show the printable event details */
+app.get("/events/print/:eventId", ensureAuthenticated,
+    route.getEventPrintDetails);
+
 /* Change the date of an event */
 app.put("/events/:eventId", ensureAuthenticated, route.putEventDate);
 

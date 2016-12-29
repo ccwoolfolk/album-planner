@@ -87,6 +87,9 @@ html
                                 button(id="submit-new-scene" class="btn btn-default" type="button") +
             
             div.row
-                div(class="col-xs-12")
+                div.col-xs-12
                     a(href="/events")
                         button.back-button Back to Events
+            div.row#print
+                div.col-xs-12
+                    a(href="/events/print/" + details["event_id"] target="_blank") Print a Backup Copy

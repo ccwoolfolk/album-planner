@@ -1,0 +1,22 @@
+html
+    head
+        title= details.name + " (" + details.date + ")"
+
+        link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+
+    body
+        h1= details.name + " (" + details.date + ")"
+        
+        each scene, index in details.scenes_detailed
+            h2= "Scene #" + (index + 1)
+            ol
+                each subject in scene.subjects
+                    li
+                        if subject.gender =="male"
+                            i(class="fa fa-male")
+                        else if subject.gender =="female"
+                            i(class="fa fa-female")
+                        else
+                            i(class="fa fa-question-circle-o")
+                        
+                        span(style="padding-left: 10px")= subject.name
