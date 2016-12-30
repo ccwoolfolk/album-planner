@@ -1,7 +1,8 @@
 html
     head
         title= details.name + " (" + details.date + ")"
-
+        include header
+        link(rel="stylesheet" href="/css/event-print-details.css" type='text/css' )
         link(rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
 
     body
@@ -9,14 +10,14 @@ html
         
         each scene, index in details.scenes_detailed
             h2= "Scene #" + (index + 1)
-            ol
+            ul.fa-ul
                 each subject in scene.subjects
                     li
                         if subject.gender =="male"
-                            i(class="fa fa-male")
+                            i(class="fa fa-male fa-li")
                         else if subject.gender =="female"
-                            i(class="fa fa-female")
+                            i(class="fa fa-female fa-li")
                         else
-                            i(class="fa fa-question-circle-o")
+                            i(class="fa fa-question-circle-o fa-li")
                         
-                        span(style="padding-left: 10px")= subject.name
+                        span.subject-name= subject.name
